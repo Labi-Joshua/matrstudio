@@ -23,6 +23,17 @@ export const metadata: Metadata = {
   description:
     'A curated library of tools, frameworks, and insights for designers who care about the craft.',
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'),
+  openGraph: {
+    title: 'Matrstudio Operational Index',
+    description: 'A curated library of tools, frameworks, and insights for designers who care about the craft.',
+    siteName: 'Matrstudio',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Matrstudio Operational Index',
+    description: 'A curated library of tools, frameworks, and insights for designers who care about the craft.',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
