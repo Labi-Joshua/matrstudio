@@ -146,7 +146,7 @@ export function SubmitForm() {
         >
           {loading ? 'Submitting…' : 'Submit for review'}
         </button>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-center md:text-left text-sm text-muted-foreground">
           No account needed. We'll credit you if it's added.
         </p>
       </div>
