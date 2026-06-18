@@ -1,7 +1,7 @@
 export function IndexHero() {
   return (
     <section className="mx-auto max-w-7xl px-4 pt-[80px] pb-10 sm:px-6 lg:px-8">
-      <h1 className="font-display text-[64px] leading-[1.1] tracking-[-2px] text-foreground">
+      <h1 className="font-display text-[48px] leading-[1.1] tracking-[-2px] text-foreground">
         A working manual for
         <br />
         the craft of design<span className="text-primary">.</span>
