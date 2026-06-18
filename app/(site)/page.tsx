@@ -34,7 +34,7 @@ export default async function HomePage({
       <IndexHero />
 
       {/* Mobile search bar — hidden on desktop where header search is visible */}
-      <div className="md:hidden mx-auto max-w-7xl px-4 pb-6 sm:px-6">
+      <div className="md:hidden mx-auto max-w-7xl px-4 pb-3 sm:px-6">
         <div className="flex items-center gap-2 rounded-full bg-[#F0F0F0] px-4 py-[8px]">
           <svg className="shrink-0 size-4 text-muted-foreground" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={1.5}>
             <circle cx="8.5" cy="8.5" r="5.75" />
@@ -46,7 +46,7 @@ export default async function HomePage({
         </div>
       </div>
 
-      <section className="mx-auto max-w-7xl px-4 pt-[48px] pb-[64px] sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 pt-0 md:pt-[48px] pb-[64px] sm:px-6 lg:px-8">
         <Suspense>
           <CategoryFilter />
         </Suspense>
