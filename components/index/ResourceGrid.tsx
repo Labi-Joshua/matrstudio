@@ -3,6 +3,7 @@ import { ResourceCard } from './ResourceCard'
 
 interface Props {
   resources: Resource[]
+  heading?: string
 }
 
 function Grid({ resources, mobileLimit }: { resources: Resource[]; mobileLimit?: number }) {
@@ -20,7 +21,7 @@ function Grid({ resources, mobileLimit }: { resources: Resource[]; mobileLimit?:
   )
 }
 
-export function ResourceGrid({ resources }: Props) {
+export function ResourceGrid({ resources, heading = 'Most Recent Resources' }: Props) {
   if (resources.length === 0) {
     return (
       <div className="py-24 text-center">
@@ -35,7 +36,7 @@ export function ResourceGrid({ resources }: Props) {
   return (
     <div className="flex flex-col gap-[64px]">
       <section>
-        <p className="mb-5 text-sm text-muted-foreground">Most Recent Resources</p>
+        <p className="mb-5 text-sm text-muted-foreground">{heading}</p>
         <Grid resources={recent} mobileLimit={3} />
       </section>
 

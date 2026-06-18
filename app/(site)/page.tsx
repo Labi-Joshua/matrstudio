@@ -20,6 +20,14 @@ export default async function HomePage({
 
   const resources = await client.fetch<Resource[]>(filteredResourcesQuery, { category, type, q })
 
+  const heading = q
+    ? `Results for "${q}"`
+    : type
+    ? `${type.charAt(0).toUpperCase() + type.slice(1)}s`
+    : category
+    ? `${category.replace(/-/g, ' & ')} Resources`
+    : 'Most Recent Resources'
+
   return (
     <div className="min-h-screen">
       <IndexHero />
@@ -27,7 +35,7 @@ export default async function HomePage({
         <Suspense>
           <CategoryFilter />
         </Suspense>
-        <ResourceGrid resources={resources} />
+        <ResourceGrid resources={resources} heading={heading} />
       </section>
     </div>
   )

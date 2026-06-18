@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { SubmitForm } from '@/components/submit/SubmitForm'
 
 export const metadata: Metadata = {
@@ -27,6 +28,17 @@ export default function SubmitPage() {
   return (
     <div className="min-h-screen">
       <section className="mx-auto max-w-7xl px-4 pt-[80px] pb-[64px] sm:px-6 lg:px-8">
+
+        {/* Back link */}
+        <Link
+          href="/"
+          className="mb-8 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <svg className="size-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M10 3L5 8l5 5" />
+          </svg>
+          Back to index
+        </Link>
 
         {/* Hero */}
         <div className="max-w-2xl">
