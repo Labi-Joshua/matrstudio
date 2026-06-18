@@ -32,7 +32,7 @@ export default function SubmitPage() {
         {/* Back link */}
         <Link
           href="/"
-          className="mb-8 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          className="mb-4 md:mb-8 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <svg className="size-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
             <path d="M10 3L5 8l5 5" />
