@@ -5,7 +5,7 @@ import { SearchInput } from './SearchInput'
 
 export function SiteHeader() {
   return (
-    <header className="w-full bg-background">
+    <header className="sticky top-0 z-40 w-full bg-background">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-[16px] sm:px-6 lg:px-8">
         <Link href="/" className="shrink-0">
           <Image src="/matrstudio..png" alt="Matrstudio" width={95} height={15} priority />

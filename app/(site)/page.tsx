@@ -29,7 +29,7 @@ export default async function HomePage({
     : 'Most Recent Resources'
 
   return (
-    <div className="min-h-screen">
+    <div>
       <IndexHero />
       <section className="mx-auto max-w-7xl px-4 pt-[48px] pb-[64px] sm:px-6 lg:px-8">
         <Suspense>

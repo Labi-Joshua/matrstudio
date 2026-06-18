@@ -26,7 +26,7 @@ const CRITERIA = [
 
 export default function SubmitPage() {
   return (
-    <div className="min-h-screen">
+    <div>
       <section className="mx-auto max-w-7xl px-4 pt-[80px] pb-[64px] sm:px-6 lg:px-8">
 
         {/* Back link */}
