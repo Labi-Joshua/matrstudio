@@ -24,7 +24,10 @@ export function SubmitForm() {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading]   = useState(false)
 
-  const isValid = title.trim() !== '' && url.trim() !== '' && topic !== '' && email.trim() !== ''
+  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
+  const normalizedUrl = url.trim() && !/^https?:\/\//i.test(url.trim()) ? `https://${url.trim()}` : url.trim()
+  const isValidUrl = (() => { try { new URL(normalizedUrl); return true } catch { return false } })()
+  const isValid = title.trim() !== '' && isValidUrl && topic !== '' && isValidEmail
 
   async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault()
