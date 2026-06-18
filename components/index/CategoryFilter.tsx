@@ -61,12 +61,10 @@ export function CategoryFilter() {
     <div className="mb-8 flex items-center justify-between gap-4">
       {/* Mobile: pill trigger + selected pill */}
       <div ref={mobileDropdownRef} className="md:hidden flex items-center gap-2 relative">
-        {/* Selected category pill — only when not "All Topics" */}
-        {current && (
-          <span className="rounded-full bg-[#DC5405] px-[14px] py-[8px] text-[12px] font-medium text-white">
-            {CATEGORIES.find((c) => c.value === current)?.label}
-          </span>
-        )}
+        {/* Active selection pill — always visible */}
+        <span className="rounded-full bg-[#DC5405] px-[14px] py-[8px] text-[12px] font-medium text-white">
+          {CATEGORIES.find((c) => c.value === current)?.label ?? 'All Topics'}
+        </span>
 
         {/* Dropdown trigger pill */}
         <button
