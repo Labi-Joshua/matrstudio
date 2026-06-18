@@ -5,11 +5,16 @@ interface Props {
   resources: Resource[]
 }
 
-function Grid({ resources }: { resources: Resource[] }) {
+function Grid({ resources, mobileLimit }: { resources: Resource[]; mobileLimit?: number }) {
   return (
     <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-      {resources.map((resource) => (
-        <ResourceCard key={resource._id} resource={resource} />
+      {resources.map((resource, i) => (
+        <div
+          key={resource._id}
+          className={mobileLimit !== undefined && i >= mobileLimit ? 'hidden sm:block' : undefined}
+        >
+          <ResourceCard resource={resource} />
+        </div>
       ))}
     </div>
   )
@@ -31,7 +36,7 @@ export function ResourceGrid({ resources }: Props) {
     <div className="flex flex-col gap-[64px]">
       <section>
         <p className="mb-5 text-sm text-muted-foreground">Most Recent Resources</p>
-        <Grid resources={recent} />
+        <Grid resources={recent} mobileLimit={3} />
       </section>
 
       {older.length > 0 && (

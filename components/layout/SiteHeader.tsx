@@ -29,7 +29,7 @@ export function SiteHeader() {
           </div>
 
           <Link
-            href="/studio"
+            href="/submit"
             className="inline-flex items-center justify-center gap-[6px] rounded-full bg-primary px-[16px] py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
           >
             Submit a Resource

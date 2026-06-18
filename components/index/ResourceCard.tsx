@@ -7,6 +7,15 @@ interface Props {
   resource: Resource
 }
 
+const TOPIC_LABELS: Record<string, string> = {
+  'craft':               'Craft & Fundamentals',
+  'brand-strategy':      'Brand & Strategy',
+  'operations-ai':       'Operations & AI',
+  'motion-interaction':  'Motion & Interaction',
+  'growth-marketing':    'Growth Marketing',
+  'editorial-curation':  'Editorial & Curation',
+}
+
 const TYPE_COLORS: Record<string, string> = {
   article:  '#4A7AB8',
   video:    '#DC5405',
@@ -31,10 +40,8 @@ export function ResourceCard({ resource }: Props) {
   const domain = getDomain(resource.externalUrl)
   const resourceType = resource.resourceType
 
-  const displayTags = [
-    resource.category,
-    ...(resource.tags ?? []),
-  ].filter(Boolean) as string[]
+  const topicLabel = TOPIC_LABELS[resource.category] ?? resource.category
+  const displayMeta = [topicLabel, resource.author].filter(Boolean).join(' · ')
 
   const imageSrc = resource.coverImageUrl
     ?? (resource.coverImage ? urlFor(resource.coverImage).width(640).height(480).url() : null)
@@ -52,7 +59,7 @@ export function ResourceCard({ resource }: Props) {
             src={imageSrc}
             alt={resource.title}
             fill
-            className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            className="object-cover transition-opacity duration-300 group-hover:opacity-90"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         )}
@@ -77,7 +84,7 @@ export function ResourceCard({ resource }: Props) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <h2 className="text-[24px] leading-snug tracking-tight text-foreground group-hover:underline underline-offset-2" style={{ fontFamily: 'Georgia, serif' }}>
+        <h2 className="text-[24px] leading-snug tracking-tight text-foreground transition-colors group-hover:text-foreground/75" style={{ fontFamily: 'Georgia, serif' }}>
           {resource.title}
         </h2>
         {resource.summary && (
@@ -85,9 +92,9 @@ export function ResourceCard({ resource }: Props) {
             {resource.summary}
           </p>
         )}
-        {displayTags.length > 0 && (
+        {displayMeta && (
           <p className="mt-[6px] text-sm text-primary" style={{ fontFamily: 'var(--font-ibm-plex-mono)' }}>
-            {displayTags.join(' · ')}
+            {displayMeta}
           </p>
         )}
       </div>
