@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Suspense } from 'react'
 import { SearchInput } from './SearchInput'
+import { MobileSearch } from './MobileSearch'
 
 export function SiteHeader() {
   return (
@@ -29,19 +30,8 @@ export function SiteHeader() {
             </Suspense>
           </div>
 
-          {/* Search icon — mobile only */}
-          <Link href="/?search=1" className="flex md:hidden items-center justify-center size-9 rounded-full bg-[#F0F0F0]">
-            <svg
-              className="size-4 text-muted-foreground"
-              viewBox="0 0 20 20"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.5}
-            >
-              <circle cx="8.5" cy="8.5" r="5.75" />
-              <path strokeLinecap="round" d="M13 13l3.5 3.5" />
-            </svg>
-          </Link>
+          {/* Search icon + bottom sheet — mobile only */}
+          <MobileSearch />
 
           <Link
             href="/submit"

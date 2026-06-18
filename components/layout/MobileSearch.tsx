@@ -1,0 +1,125 @@
+'use client'
+
+import { useState, useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation'
+
+type Suggestion = { _id: string; title: string }
+
+export function MobileSearch() {
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState('')
+  const [allResources, setAllResources] = useState<Suggestion[]>([])
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([])
+  const router = useRouter()
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    fetch('/api/suggestions')
+      .then((r) => r.json())
+      .then(setAllResources)
+      .catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    const q = value.trim().toLowerCase()
+    if (!q) { setSuggestions([]); return }
+    setSuggestions(allResources.filter((r) => r.title.toLowerCase().includes(q)).slice(0, 6))
+  }, [value, allResources])
+
+  useEffect(() => {
+    if (open) setTimeout(() => inputRef.current?.focus(), 100)
+  }, [open])
+
+  function handleSelect(title: string) {
+    setOpen(false)
+    setValue('')
+    router.push(`/?q=${encodeURIComponent(title)}`)
+  }
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!value.trim()) return
+    setOpen(false)
+    router.push(`/?q=${encodeURIComponent(value.trim())}`)
+    setValue('')
+  }
+
+  return (
+    <>
+      {/* Search icon trigger */}
+      <button
+        onClick={() => setOpen(true)}
+        className="flex md:hidden items-center justify-center size-9 rounded-full bg-[#F0F0F0]"
+        aria-label="Search"
+      >
+        <svg className="size-4 text-muted-foreground" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={1.5}>
+          <circle cx="8.5" cy="8.5" r="5.75" />
+          <path strokeLinecap="round" d="M13 13l3.5 3.5" />
+        </svg>
+      </button>
+
+      {/* Backdrop */}
+      {open && (
+        <div
+          className="fixed inset-0 z-50 bg-black/40"
+          onClick={() => { setOpen(false); setValue('') }}
+        />
+      )}
+
+      {/* Bottom sheet */}
+      <div
+        className={[
+          'fixed bottom-0 left-0 right-0 z-50 rounded-t-[20px] bg-white px-4 pb-10 pt-5 shadow-xl transition-transform duration-300',
+          open ? 'translate-y-0' : 'translate-y-full',
+        ].join(' ')}
+      >
+        {/* Drag handle */}
+        <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-[#E0E0E0]" />
+
+        {/* Search input */}
+        <form onSubmit={handleSubmit}>
+          <div className="flex items-center gap-2 rounded-full bg-[#F0F0F0] px-4 py-3">
+            <svg className="size-4 shrink-0 text-muted-foreground" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={1.5}>
+              <circle cx="8.5" cy="8.5" r="5.75" />
+              <path strokeLinecap="round" d="M13 13l3.5 3.5" />
+            </svg>
+            <input
+              ref={inputRef}
+              type="search"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder="Search the index"
+              className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+            />
+            {value && (
+              <button type="button" onClick={() => setValue('')} className="text-muted-foreground">
+                <svg className="size-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" d="M4 4l8 8M12 4l-8 8" />
+                </svg>
+              </button>
+            )}
+          </div>
+        </form>
+
+        {/* Suggestions */}
+        {suggestions.length > 0 && (
+          <div className="mt-3 flex flex-col">
+            {suggestions.map((s) => (
+              <button
+                key={s._id}
+                onClick={() => handleSelect(s.title)}
+                className="flex items-center gap-3 px-1 py-3 text-left text-sm text-foreground border-b border-[#F0F0F0] last:border-0"
+              >
+                <svg className="size-3.5 shrink-0 text-muted-foreground" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={1.5}>
+                  <circle cx="8.5" cy="8.5" r="5.75" />
+                  <path strokeLinecap="round" d="M13 13l3.5 3.5" />
+                </svg>
+                {s.title}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
+  )
+}
