@@ -4,7 +4,13 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 type Suggestion = { _id: string; title: string; slug: string; externalUrl?: string }
 
-export function SearchInput() {
+export function SearchInput({
+  inputClassName = '',
+  dropdownClassName = 'left-[-40px] w-[366px]',
+}: {
+  inputClassName?: string
+  dropdownClassName?: string
+}) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [value, setValue] = useState(searchParams.get('q') ?? '')
@@ -71,12 +77,12 @@ export function SearchInput() {
           onChange={(e) => setValue(e.target.value)}
           onFocus={() => suggestions.length > 0 && setOpen(true)}
           placeholder="Search the index"
-          className="w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+          className={`w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none ${inputClassName}`}
         />
       </form>
 
       {open && (
-        <div className="absolute left-[-40px] top-[calc(100%+14px)] z-50 w-[366px] overflow-hidden rounded-xl bg-white shadow-lg ring-1 ring-black/5">
+        <div className={`absolute top-[calc(100%+14px)] z-50 overflow-hidden rounded-xl bg-white shadow-lg ring-1 ring-black/5 ${dropdownClassName}`}>
           {suggestions.map((s) => (
             <button
               key={s._id}
