@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 
 const CATEGORIES = [
   { label: 'All Topics',           value: '' },
@@ -29,17 +29,19 @@ export function CategoryFilter() {
   const currentType = searchParams.get('type') ?? ''
 
   const [open, setOpen] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const mobileDropdownRef = useRef<HTMLDivElement>(null)
+
+  const onClickOutside = useCallback((e: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) setOpen(false)
+    if (mobileDropdownRef.current && !mobileDropdownRef.current.contains(e.target as Node)) setMobileOpen(false)
+  }, [])
 
   useEffect(() => {
-    function onClickOutside(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setOpen(false)
-      }
-    }
     document.addEventListener('mousedown', onClickOutside)
     return () => document.removeEventListener('mousedown', onClickOutside)
-  }, [])
+  }, [onClickOutside])
 
   function selectCategory(value: string) {
     const params = new URLSearchParams(searchParams.toString())
@@ -57,16 +59,43 @@ export function CategoryFilter() {
 
   return (
     <div className="mb-8 flex items-center justify-between gap-4">
-      {/* Mobile: single dropdown */}
-      <select
-        value={current}
-        onChange={(e) => selectCategory(e.target.value)}
-        className="md:hidden rounded-full bg-[#F5F5F5] px-[14px] py-[8px] text-[12px] font-medium text-foreground focus:outline-none"
-      >
-        {CATEGORIES.map(({ label, value }) => (
-          <option key={value} value={value}>{label}</option>
-        ))}
-      </select>
+      {/* Mobile: pill trigger + selected pill */}
+      <div ref={mobileDropdownRef} className="md:hidden flex items-center gap-2 relative">
+        {/* Selected category pill — only when not "All Topics" */}
+        {current && (
+          <span className="rounded-full bg-[#DC5405] px-[14px] py-[8px] text-[12px] font-medium text-white">
+            {CATEGORIES.find((c) => c.value === current)?.label}
+          </span>
+        )}
+
+        {/* Dropdown trigger pill */}
+        <button
+          onClick={() => setMobileOpen((o) => !o)}
+          className="flex items-center gap-1.5 rounded-full bg-[#F5F5F5] px-[14px] py-[8px] text-[12px] font-medium text-foreground"
+        >
+          Topics
+          <svg className="size-3 shrink-0" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 4l4 4 4-4" />
+          </svg>
+        </button>
+
+        {mobileOpen && (
+          <div className="absolute left-0 top-full z-50 mt-2 w-52 overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5">
+            {CATEGORIES.map(({ label, value }) => (
+              <button
+                key={value}
+                onClick={() => { selectCategory(value); setMobileOpen(false) }}
+                className={[
+                  'flex w-full items-center px-4 py-2.5 text-left text-sm transition-colors',
+                  current === value ? 'bg-muted font-medium text-primary' : 'text-foreground hover:bg-muted/50',
+                ].join(' ')}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* Desktop: chip row */}
       <div className="hidden md:flex flex-wrap items-center gap-2">
