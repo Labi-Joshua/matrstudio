@@ -2,7 +2,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Suspense } from 'react'
 import { SearchInput } from './SearchInput'
-import { MobileSearch } from './MobileSearch'
 
 export function SiteHeader() {
   return (
@@ -29,9 +28,6 @@ export function SiteHeader() {
               <SearchInput />
             </Suspense>
           </div>
-
-          {/* Search icon + bottom sheet — mobile only */}
-          <MobileSearch />
 
           <Link
             href="/submit"
