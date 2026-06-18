@@ -42,7 +42,7 @@ export default function SubmitPage() {
 
         {/* Hero */}
         <div className="max-w-2xl">
-          <h1 className="font-display text-[56px] leading-[1.1] tracking-[-1.5px] text-foreground">
+          <h1 className="font-display text-[48px] leading-[1.1] tracking-[-1.5px] text-foreground">
             Found something worth the index<span className="text-primary">?</span>
           </h1>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">
