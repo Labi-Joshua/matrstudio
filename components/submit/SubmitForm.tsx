@@ -138,11 +138,11 @@ export function SubmitForm() {
       </div>
 
       {/* Submit */}
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-4">
         <button
           type="submit"
           disabled={!isValid || loading}
-          className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+          className="w-full md:w-auto inline-flex items-center justify-center rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
         >
           {loading ? 'Submitting…' : 'Submit for review'}
         </button>
