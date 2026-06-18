@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 
 const CATEGORIES = [
   { label: 'All Topics',           value: '' },
@@ -14,14 +14,12 @@ const CATEGORIES = [
 ]
 
 const TYPE_FILTERS = [
-  { label: 'All Types', value: '',        color: '#9CA3AF' },
-  { label: 'Article',   value: 'article', color: '#4A7AB8' },
-  { label: 'Video',     value: 'video',   color: '#DC5405' },
-  { label: 'Book',      value: 'book',    color: '#B07840' },
-  { label: 'Tool',      value: 'tool',    color: '#7C2828' },
+  { label: 'All',     value: '',        color: '#9CA3AF' },
+  { label: 'Article', value: 'article', color: '#4A7AB8' },
+  { label: 'Video',   value: 'video',   color: '#DC5405' },
+  { label: 'Book',    value: 'book',    color: '#B07840' },
+  { label: 'Tool',    value: 'tool',    color: '#7C2828' },
 ]
-
-const PILL = 'rounded-full px-[14px] py-[8px] text-[12px] font-medium'
 
 export function CategoryFilter() {
   const router = useRouter()
@@ -31,15 +29,19 @@ export function CategoryFilter() {
   const currentType = searchParams.get('type') ?? ''
 
   const [open, setOpen] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const mobileDropdownRef = useRef<HTMLDivElement>(null)
+
+  const onClickOutside = useCallback((e: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) setOpen(false)
+    if (mobileDropdownRef.current && !mobileDropdownRef.current.contains(e.target as Node)) setMobileOpen(false)
+  }, [])
 
   useEffect(() => {
-    function onClickOutside(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) setOpen(false)
-    }
     document.addEventListener('mousedown', onClickOutside)
     return () => document.removeEventListener('mousedown', onClickOutside)
-  }, [])
+  }, [onClickOutside])
 
   function selectCategory(value: string) {
     const params = new URLSearchParams(searchParams.toString())
@@ -57,28 +59,40 @@ export function CategoryFilter() {
 
   return (
     <div className="mb-8 flex items-center justify-between gap-4">
+      {/* Mobile: pill trigger + selected pill */}
+      <div ref={mobileDropdownRef} className="md:hidden flex items-center gap-2 relative">
+        {/* Active selection pill — always visible */}
+        <span className="rounded-full bg-[#DC5405] px-[14px] py-[8px] text-[12px] font-medium text-white">
+          {CATEGORIES.find((c) => c.value === current)?.label ?? 'All Topics'}
+        </span>
 
-      {/* Mobile: native selects */}
-      <div className="md:hidden flex items-center gap-2">
-        <select
-          value={current}
-          onChange={(e) => selectCategory(e.target.value)}
-          className={`${PILL} bg-[#F5F5F5] text-foreground focus:outline-none`}
+        {/* Dropdown trigger pill */}
+        <button
+          onClick={() => setMobileOpen((o) => !o)}
+          className="flex items-center gap-1.5 rounded-full bg-[#F5F5F5] px-[14px] py-[8px] text-[12px] font-medium text-foreground"
         >
-          {CATEGORIES.map(({ label, value }) => (
-            <option key={value} value={value}>{label}</option>
-          ))}
-        </select>
+          Topics
+          <svg className="size-3 shrink-0" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 4l4 4 4-4" />
+          </svg>
+        </button>
 
-        <select
-          value={currentType}
-          onChange={(e) => selectType(e.target.value)}
-          className={`${PILL} bg-[#F5F5F5] text-foreground focus:outline-none`}
-        >
-          {TYPE_FILTERS.map(({ label, value }) => (
-            <option key={value} value={value}>{label}</option>
-          ))}
-        </select>
+        {mobileOpen && (
+          <div className="absolute left-0 top-full z-50 mt-2 w-52 overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5">
+            {CATEGORIES.map(({ label, value }) => (
+              <button
+                key={value}
+                onClick={() => { selectCategory(value); setMobileOpen(false) }}
+                className={[
+                  'flex w-full items-center px-4 py-2.5 text-left text-sm transition-colors',
+                  current === value ? 'bg-muted font-medium text-primary' : 'text-foreground hover:bg-muted/50',
+                ].join(' ')}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Desktop: chip row */}
@@ -90,7 +104,7 @@ export function CategoryFilter() {
               key={value}
               onClick={() => selectCategory(value)}
               className={[
-                PILL + ' transition-colors',
+                'rounded-full px-[14px] py-[8px] text-[12px] font-medium transition-colors',
                 isActive
                   ? 'bg-[#DC5405] text-white'
                   : 'bg-[#F5F5F5] text-foreground hover:bg-[#EBEBEB]',
@@ -102,8 +116,7 @@ export function CategoryFilter() {
         })}
       </div>
 
-      {/* Desktop: custom filter dropdown */}
-      <div ref={dropdownRef} className="relative hidden md:block shrink-0">
+      <div ref={dropdownRef} className="relative shrink-0">
         <button
           onClick={() => setOpen((o) => !o)}
           className="flex items-center gap-1.5 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary transition-colors hover:bg-primary/15"
@@ -130,7 +143,10 @@ export function CategoryFilter() {
                     isActive ? 'bg-muted' : 'hover:bg-muted/50',
                   ].join(' ')}
                 >
-                  <span className="size-2.5 shrink-0 rounded-full" style={{ backgroundColor: color }} />
+                  <span
+                    className="size-2.5 shrink-0 rounded-full"
+                    style={{ backgroundColor: color }}
+                  />
                   <span className={['flex-1 text-left font-medium', isActive ? 'text-primary' : 'text-foreground'].join(' ')}>
                     {label}
                   </span>
@@ -145,7 +161,6 @@ export function CategoryFilter() {
           </div>
         )}
       </div>
-
     </div>
   )
 }
