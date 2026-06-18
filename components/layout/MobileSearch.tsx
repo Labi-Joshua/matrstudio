@@ -110,7 +110,7 @@ export function MobileSearch() {
               value={value}
               onChange={(e) => setValue(e.target.value)}
               placeholder="Search the index"
-              className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+              className="flex-1 bg-transparent text-[16px] text-foreground placeholder:text-muted-foreground focus:outline-none"
             />
             {value && (
               <button type="button" onClick={() => setValue('')} className="text-muted-foreground">
