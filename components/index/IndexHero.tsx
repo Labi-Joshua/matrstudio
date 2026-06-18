@@ -1,6 +1,6 @@
 export function IndexHero() {
   return (
-    <section className="mx-auto max-w-7xl px-4 pt-[80px] pb-10 sm:px-6 lg:px-8">
+    <section className="mx-auto max-w-7xl px-4 pt-[32px] pb-10 sm:px-6 lg:px-8">
       <h1 className="font-display text-[54px] md:text-[48px] leading-[1.1] tracking-[-2px] text-foreground">
         A working manual for the craft of design<span className="text-primary">.</span>
       </h1>
