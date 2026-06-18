@@ -57,7 +57,19 @@ export function CategoryFilter() {
 
   return (
     <div className="mb-8 flex items-center justify-between gap-4">
-      <div className="flex flex-wrap items-center gap-2">
+      {/* Mobile: single dropdown */}
+      <select
+        value={current}
+        onChange={(e) => selectCategory(e.target.value)}
+        className="md:hidden rounded-full bg-[#F5F5F5] px-[14px] py-[8px] text-[12px] font-medium text-foreground focus:outline-none"
+      >
+        {CATEGORIES.map(({ label, value }) => (
+          <option key={value} value={value}>{label}</option>
+        ))}
+      </select>
+
+      {/* Desktop: chip row */}
+      <div className="hidden md:flex flex-wrap items-center gap-2">
         {CATEGORIES.map(({ label, value }) => {
           const isActive = current === value
           return (
