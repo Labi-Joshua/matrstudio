@@ -26,9 +26,6 @@ export function MobileSearch() {
     setSuggestions(allResources.filter((r) => r.title.toLowerCase().includes(q)).slice(0, 6))
   }, [value, allResources])
 
-  useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 100)
-  }, [open])
 
   function handleSelect(title: string) {
     setOpen(false)
@@ -36,7 +33,7 @@ export function MobileSearch() {
     router.push(`/?q=${encodeURIComponent(title)}`)
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault()
     if (!value.trim()) return
     setOpen(false)
@@ -48,7 +45,7 @@ export function MobileSearch() {
     <>
       {/* Search icon trigger */}
       <button
-        onClick={() => setOpen(true)}
+        onClick={() => { setOpen(true); inputRef.current?.focus() }}
         className="flex md:hidden items-center justify-center size-9 rounded-full bg-[#F0F0F0]"
         aria-label="Search"
       >
