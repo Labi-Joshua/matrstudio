@@ -63,7 +63,10 @@ export function CategoryFilter() {
         <select
           value={current}
           onChange={(e) => selectCategory(e.target.value)}
-          className={`${PILL} bg-[#F5F5F5] text-foreground focus:outline-none`}
+          className={[
+            PILL, 'focus:outline-none',
+            current ? 'bg-[#DC5405] text-white' : 'bg-[#F5F5F5] text-foreground',
+          ].join(' ')}
         >
           {CATEGORIES.map(({ label, value }) => (
             <option key={value} value={value}>{label}</option>
@@ -73,7 +76,10 @@ export function CategoryFilter() {
         <select
           value={currentType}
           onChange={(e) => selectType(e.target.value)}
-          className={`${PILL} bg-[#F5F5F5] text-foreground focus:outline-none`}
+          className={[
+            PILL, 'focus:outline-none',
+            currentType ? 'bg-[#DC5405] text-white' : 'bg-[#F5F5F5] text-foreground',
+          ].join(' ')}
         >
           {TYPE_FILTERS.map(({ label, value }) => (
             <option key={value} value={value}>{label}</option>
