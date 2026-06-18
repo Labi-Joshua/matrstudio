@@ -27,7 +27,7 @@ const CRITERIA = [
 export default function SubmitPage() {
   return (
     <div>
-      <section className="mx-auto max-w-7xl px-4 pt-[80px] pb-[64px] sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 pt-[32px] md:pt-[80px] pb-[64px] sm:px-6 lg:px-8">
 
         {/* Back link */}
         <Link
