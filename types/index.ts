@@ -4,7 +4,9 @@ export interface Resource {
   _id: string
   title: string
   slug: { current: string }
-  category: 'brand' | 'design' | 'motion' | 'strategy' | 'operations' | 'editorial'
+  resourceType?: 'article' | 'video' | 'book' | 'tool' | 'course' | 'template' | 'podcast'
+  category: 'craft' | 'brand-strategy' | 'operations-ai' | 'motion-interaction' | 'growth-marketing' | 'editorial-curation'
+  author?: string
   tags?: string[]
   summary?: string
   coverImage?: SanityImageSource

@@ -4,11 +4,13 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { useState, useRef, useEffect } from 'react'
 
 const CATEGORIES = [
-  { label: 'All Topics', value: '' },
-  { label: 'Product Design', value: 'design' },
-  { label: 'Brand Identity', value: 'brand' },
-  { label: 'Marketing', value: 'strategy' },
-  { label: 'SEO', value: 'editorial' },
+  { label: 'All Topics',           value: '' },
+  { label: 'Craft & Fundamentals', value: 'craft' },
+  { label: 'Brand & Strategy',     value: 'brand-strategy' },
+  { label: 'Operations & AI',      value: 'operations-ai' },
+  { label: 'Motion & Interaction', value: 'motion-interaction' },
+  { label: 'Growth Marketing',     value: 'growth-marketing' },
+  { label: 'Editorial & Curation', value: 'editorial-curation' },
 ]
 
 const TYPE_FILTERS = [
@@ -63,7 +65,7 @@ export function CategoryFilter() {
               key={value}
               onClick={() => selectCategory(value)}
               className={[
-                'rounded-full px-[14px] py-[8px] text-sm font-medium transition-colors',
+                'rounded-full px-[14px] py-[8px] text-[12px] font-medium transition-colors',
                 isActive
                   ? 'bg-[#DC5405] text-white'
                   : 'bg-[#F5F5F5] text-foreground hover:bg-[#EBEBEB]',

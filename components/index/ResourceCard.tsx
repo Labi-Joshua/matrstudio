@@ -7,9 +7,7 @@ interface Props {
   resource: Resource
 }
 
-const FORMAT_TAGS = ['book', 'article', 'video', 'tool', 'course', 'template', 'podcast']
-
-const FORMAT_COLORS: Record<string, string> = {
+const TYPE_COLORS: Record<string, string> = {
   article:  '#4A7AB8',
   video:    '#DC5405',
   book:     '#B07840',
@@ -31,11 +29,11 @@ function capitalize(s: string) {
 export function ResourceCard({ resource }: Props) {
   const href = resource.externalUrl ?? `/resources/${resource.slug.current}`
   const domain = getDomain(resource.externalUrl)
-  const formatTag = resource.tags?.find((t) => FORMAT_TAGS.includes(t.toLowerCase()))
+  const resourceType = resource.resourceType
 
   const displayTags = [
     resource.category,
-    ...(resource.tags ?? []).filter((t) => !FORMAT_TAGS.includes(t.toLowerCase())),
+    ...(resource.tags ?? []),
   ].filter(Boolean) as string[]
 
   const imageSrc = resource.coverImageUrl
@@ -58,15 +56,15 @@ export function ResourceCard({ resource }: Props) {
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         )}
-        {(formatTag || domain) && (
+        {(resourceType || domain) && (
           <div className="absolute bottom-3 right-3 flex items-center gap-1.5">
-            {formatTag && (
+            {resourceType && (
               <span className="flex items-center gap-1.5 rounded-[6px] bg-white px-3 py-1.5 text-[12px] font-medium text-foreground shadow-sm">
                 <span
                   className="size-2.5 shrink-0 rounded-full"
-                  style={{ backgroundColor: FORMAT_COLORS[formatTag.toLowerCase()] ?? '#9CA3AF' }}
+                  style={{ backgroundColor: TYPE_COLORS[resourceType] ?? '#9CA3AF' }}
                 />
-                {capitalize(formatTag)}
+                {capitalize(resourceType)}
               </span>
             )}
             {domain && (

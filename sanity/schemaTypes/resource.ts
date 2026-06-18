@@ -19,20 +19,43 @@ export const resource = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'category',
-      title: 'Category',
+      name: 'resourceType',
+      title: 'Type',
       type: 'string',
       options: {
         list: [
-          { title: 'Brand', value: 'brand' },
-          { title: 'Design', value: 'design' },
-          { title: 'Motion', value: 'motion' },
-          { title: 'Strategy', value: 'strategy' },
-          { title: 'Operations', value: 'operations' },
-          { title: 'Editorial', value: 'editorial' },
+          { title: 'Article', value: 'article' },
+          { title: 'Video', value: 'video' },
+          { title: 'Book', value: 'book' },
+          { title: 'Tool', value: 'tool' },
+          { title: 'Course', value: 'course' },
+          { title: 'Template', value: 'template' },
+          { title: 'Podcast', value: 'podcast' },
+        ],
+        layout: 'radio',
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'category',
+      title: 'Topic',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Craft & Fundamentals', value: 'craft' },
+          { title: 'Brand & Strategy',     value: 'brand-strategy' },
+          { title: 'Operations & AI',      value: 'operations-ai' },
+          { title: 'Motion & Interaction', value: 'motion-interaction' },
+          { title: 'Growth Marketing',     value: 'growth-marketing' },
+          { title: 'Editorial & Curation', value: 'editorial-curation' },
         ],
       },
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'author',
+      title: 'Author',
+      type: 'string',
     }),
     defineField({
       name: 'tags',
@@ -77,6 +100,6 @@ export const resource = defineType({
     }),
   ],
   preview: {
-    select: { title: 'title', subtitle: 'category', media: 'coverImage' },
+    select: { title: 'title', subtitle: 'resourceType', media: 'coverImage' },
   },
 })
