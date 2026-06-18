@@ -10,6 +10,7 @@ export function MobileSearch() {
   const [value, setValue] = useState('')
   const [allResources, setAllResources] = useState<Suggestion[]>([])
   const [suggestions, setSuggestions] = useState<Suggestion[]>([])
+  const [keyboardOffset, setKeyboardOffset] = useState(0)
   const router = useRouter()
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -26,6 +27,28 @@ export function MobileSearch() {
     setSuggestions(allResources.filter((r) => r.title.toLowerCase().includes(q)).slice(0, 6))
   }, [value, allResources])
 
+  // Track keyboard height via visualViewport
+  useEffect(() => {
+    const vv = window.visualViewport
+    if (!vv) return
+
+    const onResize = () => {
+      const offset = window.innerHeight - vv.height - vv.offsetTop
+      setKeyboardOffset(Math.max(0, offset))
+    }
+
+    vv.addEventListener('resize', onResize)
+    vv.addEventListener('scroll', onResize)
+    return () => {
+      vv.removeEventListener('resize', onResize)
+      vv.removeEventListener('scroll', onResize)
+    }
+  }, [])
+
+  // Reset offset when sheet closes
+  useEffect(() => {
+    if (!open) setKeyboardOffset(0)
+  }, [open])
 
   function handleSelect(title: string) {
     setOpen(false)
@@ -66,9 +89,10 @@ export function MobileSearch() {
       {/* Bottom sheet */}
       <div
         className={[
-          'fixed bottom-0 left-0 right-0 z-50 rounded-t-[20px] bg-white px-4 pb-10 pt-5 shadow-xl transition-transform duration-300',
+          'fixed left-0 right-0 z-50 rounded-t-[20px] bg-white px-4 pt-5 shadow-xl transition-[transform,bottom] duration-300',
           open ? 'translate-y-0' : 'translate-y-full',
         ].join(' ')}
+        style={{ bottom: keyboardOffset, paddingBottom: keyboardOffset > 0 ? 16 : 40 }}
       >
         {/* Drag handle */}
         <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-[#E0E0E0]" />
@@ -100,12 +124,12 @@ export function MobileSearch() {
 
         {/* Suggestions */}
         {suggestions.length > 0 && (
-          <div className="mt-3 flex flex-col">
+          <div className="mt-3 flex flex-col overflow-y-auto" style={{ maxHeight: keyboardOffset > 0 ? 160 : 300 }}>
             {suggestions.map((s) => (
               <button
                 key={s._id}
                 onClick={() => handleSelect(s.title)}
-                className="flex items-center gap-3 px-1 py-3 text-left text-sm text-foreground border-b border-[#F0F0F0] last:border-0"
+                className="flex shrink-0 items-center gap-3 px-1 py-3 text-left text-sm text-foreground border-b border-[#F0F0F0] last:border-0"
               >
                 <svg className="size-3.5 shrink-0 text-muted-foreground" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={1.5}>
                   <circle cx="8.5" cy="8.5" r="5.75" />
