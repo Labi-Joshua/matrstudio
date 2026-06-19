@@ -50,7 +50,7 @@ export function TopicBrowser() {
                 <button
                   onClick={() => select(sub)}
                   className={[
-                    'text-left text-sm transition-colors',
+                    'text-left text-[14px] transition-colors',
                     active === sub
                       ? 'text-primary'
                       : 'text-[#040404]/60 hover:text-primary',
