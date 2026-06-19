@@ -44,7 +44,7 @@ export function TopicBrowser() {
           >
             {label}<span className="text-primary">.</span>
           </h2>
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col gap-1">
             {subtopics.map((sub) => (
               <li key={sub}>
                 <button
