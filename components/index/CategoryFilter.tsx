@@ -4,7 +4,7 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { useState, useRef, useEffect, useCallback } from 'react'
 
 const CATEGORIES = [
-  { label: 'All Topics',          value: '' },
+  { label: 'All Categories',      value: '' },
   { label: 'Design Execution',    value: 'design-execution' },
   { label: 'Strategic Thinking',  value: 'strategic-thinking' },
   { label: 'Business & Growth',   value: 'business-growth' },
