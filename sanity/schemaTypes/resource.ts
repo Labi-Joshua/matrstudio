@@ -100,12 +100,6 @@ export const resource = defineType({
       rows: 3,
     }),
     defineField({
-      name: 'body',
-      title: 'Body',
-      type: 'array',
-      of: [{ type: 'block' }],
-    }),
-    defineField({
       name: 'coverImage',
       title: 'Cover Image',
       type: 'image',
