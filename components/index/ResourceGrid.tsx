@@ -4,6 +4,7 @@ import { ResourceCard } from './ResourceCard'
 interface Props {
   resources: Resource[]
   heading?: string
+  headingNode?: React.ReactNode
 }
 
 function Grid({ resources, mobileLimit }: { resources: Resource[]; mobileLimit?: number }) {
@@ -21,7 +22,7 @@ function Grid({ resources, mobileLimit }: { resources: Resource[]; mobileLimit?:
   )
 }
 
-export function ResourceGrid({ resources, heading = 'Most Recent Resources' }: Props) {
+export function ResourceGrid({ resources, heading = 'Most Recent Resources', headingNode }: Props) {
   if (resources.length === 0) {
     return (
       <div className="py-24 text-center">
@@ -36,7 +37,7 @@ export function ResourceGrid({ resources, heading = 'Most Recent Resources' }: P
   return (
     <div className="flex flex-col gap-[64px]">
       <section>
-        <p className="mb-5 text-sm text-muted-foreground">{heading}</p>
+        <div className="mb-5">{headingNode ?? <p className="text-sm text-muted-foreground">{heading}</p>}</div>
         <Grid resources={recent} mobileLimit={3} />
       </section>
 
