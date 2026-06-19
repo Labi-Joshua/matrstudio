@@ -12,11 +12,14 @@ const CATEGORIES = [
 ]
 
 const TYPE_FILTERS = [
-  { label: 'All',     value: '',        color: '#9CA3AF' },
-  { label: 'Article', value: 'article', color: '#4A7AB8' },
-  { label: 'Video',   value: 'video',   color: '#DC5405' },
-  { label: 'Book',    value: 'book',    color: '#B07840' },
-  { label: 'Tool',    value: 'tool',    color: '#7C2828' },
+  { label: 'All',      value: '',         color: '#9CA3AF' },
+  { label: 'Article',  value: 'article',  color: '#4A7AB8' },
+  { label: 'Video',    value: 'video',    color: '#DC5405' },
+  { label: 'Book',     value: 'book',     color: '#B07840' },
+  { label: 'Tool',     value: 'tool',     color: '#7C2828' },
+  { label: 'Course',   value: 'course',   color: '#6B7280' },
+  { label: 'Template', value: 'template', color: '#059669' },
+  { label: 'Podcast',  value: 'podcast',  color: '#7C3AED' },
 ]
 
 export function CategoryFilter() {
