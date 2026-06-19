@@ -15,9 +15,8 @@ export default async function TopicsPage({
   const params = await searchParams
   const t = params.t ?? ''
 
-  const resources = t
-    ? await client.fetch<Resource[]>(filteredResourcesQuery, { category: '', type: '', q: t })
-    : []
+  const resources = await client.fetch<Resource[]>(filteredResourcesQuery, { category: '', type: '', q: t })
+  const heading = t ? `Resources on '${t}'` : 'All Resources'
 
   return (
     <div>
@@ -27,11 +26,9 @@ export default async function TopicsPage({
         </Suspense>
       </section>
 
-      {t && (
-        <section className="mx-auto max-w-7xl px-4 pb-[64px] sm:px-6 lg:px-8">
-          <ResourceGrid resources={resources} heading={`Resources on '${t}'`} />
-        </section>
-      )}
+      <section className="mx-auto max-w-7xl px-4 pb-[64px] sm:px-6 lg:px-8">
+        <ResourceGrid resources={resources} heading={heading} />
+      </section>
     </div>
   )
 }
