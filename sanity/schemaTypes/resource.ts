@@ -51,6 +51,39 @@ export const resource = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'subtopic',
+      title: 'Subtopic',
+      type: 'string',
+      options: {
+        list: [
+          // Design Execution
+          { title: 'Design Systems',       value: 'design-systems' },
+          { title: 'Design Handoff',       value: 'design-handoff' },
+          { title: 'Prototyping',          value: 'prototyping' },
+          { title: 'Documentation',        value: 'documentation' },
+          { title: 'Visual Architecture',  value: 'visual-architecture' },
+          // Strategic Thinking
+          { title: 'Design Rationale',     value: 'design-rationale' },
+          { title: 'Stakeholder Management', value: 'stakeholder-management' },
+          { title: 'Product Thinking',     value: 'product-thinking' },
+          { title: 'User Research',        value: 'user-research' },
+          { title: 'Design Ethics',        value: 'design-ethics' },
+          // Business & Growth
+          { title: 'Product Analytics',    value: 'product-analytics' },
+          { title: 'Conversion Optimization', value: 'conversion-optimization' },
+          { title: 'SEO Optimization',     value: 'seo-optimization' },
+          { title: 'Growth Design',        value: 'growth-design' },
+          { title: 'Marketing & Strategy', value: 'marketing-strategy' },
+          // Career & Craft
+          { title: 'Career Strategy',      value: 'career-strategy' },
+          { title: 'Portfolio & Case Studies', value: 'portfolio-case-studies' },
+          { title: 'AI-Assisted Workflow', value: 'ai-assisted-workflow' },
+          { title: 'Accessibility',        value: 'accessibility' },
+          { title: 'Workflow Optimization', value: 'workflow-optimization' },
+        ],
+      },
+    }),
+    defineField({
       name: 'author',
       title: 'Author',
       type: 'string',

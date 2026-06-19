@@ -6,6 +6,7 @@ const resourceFields = groq`
   slug,
   resourceType,
   category,
+  subtopic,
   author,
   tags,
   summary,
@@ -54,6 +55,7 @@ export const filteredResourcesQuery = groq`
   *[_type == "resource"
     && ($category == "" || category == $category)
     && ($type == "" || resourceType == $type)
+    && ($subtopic == "" || subtopic == $subtopic)
     && ($q == "" || title match $q + "*" || summary match $q + "*" || $q in tags)
   ] | order(publishedAt desc) {
     ${resourceFields}

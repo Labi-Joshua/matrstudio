@@ -14,11 +14,11 @@ export default async function TopicsPage({
   searchParams: Promise<Record<string, string>>
 }) {
   const params = await searchParams
-  const t = params.t ?? ''
-  const type = params.type ?? ''
+  const subtopic = params.subtopic ?? ''
   const category = params.category ?? ''
+  const type = params.type ?? ''
 
-  const resources = await client.fetch<Resource[]>(filteredResourcesQuery, { category, type, q: t })
+  const resources = await client.fetch<Resource[]>(filteredResourcesQuery, { category, type, subtopic, q: '' })
 
   return (
     <div>
@@ -33,7 +33,7 @@ export default async function TopicsPage({
           resources={resources}
           headingNode={
             <Suspense>
-              <TopicResourceHeader topic={t} />
+              <TopicResourceHeader subtopic={subtopic} />
             </Suspense>
           }
         />

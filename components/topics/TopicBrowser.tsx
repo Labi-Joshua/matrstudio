@@ -6,35 +6,59 @@ const TOPICS = [
   {
     label: 'Design Execution',
     value: 'design-execution',
-    subtopics: ['Design Systems', 'Design Handoff', 'Prototyping', 'Documentation', 'Visual Architecture'],
+    subtopics: [
+      { label: 'Design Systems',      value: 'design-systems' },
+      { label: 'Design Handoff',      value: 'design-handoff' },
+      { label: 'Prototyping',         value: 'prototyping' },
+      { label: 'Documentation',       value: 'documentation' },
+      { label: 'Visual Architecture', value: 'visual-architecture' },
+    ],
   },
   {
     label: 'Strategic Thinking',
     value: 'strategic-thinking',
-    subtopics: ['Design Rationale', 'Stakeholder Management', 'Product Thinking', 'User Research', 'Design Ethics'],
+    subtopics: [
+      { label: 'Design Rationale',       value: 'design-rationale' },
+      { label: 'Stakeholder Management', value: 'stakeholder-management' },
+      { label: 'Product Thinking',       value: 'product-thinking' },
+      { label: 'User Research',          value: 'user-research' },
+      { label: 'Design Ethics',          value: 'design-ethics' },
+    ],
   },
   {
     label: 'Business & Growth',
     value: 'business-growth',
-    subtopics: ['Product Analytics', 'Conversion Optimization', 'SEO Optimization', 'Growth Design', 'Marketing & Strategy'],
+    subtopics: [
+      { label: 'Product Analytics',       value: 'product-analytics' },
+      { label: 'Conversion Optimization', value: 'conversion-optimization' },
+      { label: 'SEO Optimization',        value: 'seo-optimization' },
+      { label: 'Growth Design',           value: 'growth-design' },
+      { label: 'Marketing & Strategy',    value: 'marketing-strategy' },
+    ],
   },
   {
     label: 'Career & Craft',
     value: 'career-craft',
-    subtopics: ['Career Strategy', 'Portfolio & Case Studies', 'AI-Assisted Workflow', 'Accessibility', 'Workflow Optimization'],
+    subtopics: [
+      { label: 'Career Strategy',        value: 'career-strategy' },
+      { label: 'Portfolio & Case Studies', value: 'portfolio-case-studies' },
+      { label: 'AI-Assisted Workflow',   value: 'ai-assisted-workflow' },
+      { label: 'Accessibility',          value: 'accessibility' },
+      { label: 'Workflow Optimization',  value: 'workflow-optimization' },
+    ],
   },
 ]
 
 export function TopicBrowser() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const active = searchParams.get('t') ?? ''
+  const activeSubtopic = searchParams.get('subtopic') ?? ''
 
   function select(category: string, subtopic: string) {
-    if (active === subtopic) {
+    if (activeSubtopic === subtopic) {
       router.push('/topics')
     } else {
-      router.push(`/topics?category=${encodeURIComponent(category)}&t=${encodeURIComponent(subtopic)}`)
+      router.push(`/topics?category=${encodeURIComponent(category)}&subtopic=${encodeURIComponent(subtopic)}`)
     }
   }
 
@@ -50,17 +74,17 @@ export function TopicBrowser() {
           </h2>
           <ul className="flex flex-col gap-1">
             {subtopics.map((sub) => (
-              <li key={sub}>
+              <li key={sub.value}>
                 <button
-                  onClick={() => select(value, sub)}
+                  onClick={() => select(value, sub.value)}
                   className={[
                     'text-left text-[14px] transition-colors',
-                    active === sub
+                    activeSubtopic === sub.value
                       ? 'text-primary'
                       : 'text-[#040404]/60 hover:text-primary',
                   ].join(' ')}
                 >
-                  {sub}
+                  {sub.label}
                 </button>
               </li>
             ))}

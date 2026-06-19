@@ -19,7 +19,7 @@ export default async function HomePage({
   const type = params.type ?? ''
   const q = params.q ?? ''
 
-  const resources = await client.fetch<Resource[]>(filteredResourcesQuery, { category, type, q })
+  const resources = await client.fetch<Resource[]>(filteredResourcesQuery, { category, type, subtopic: '', q })
 
   const heading = q
     ? `Results for "${q}"`

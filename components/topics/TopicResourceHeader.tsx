@@ -11,7 +11,8 @@ const TYPE_FILTERS = [
   { label: 'Tool',    value: 'tool',    color: '#7C2828' },
 ]
 
-export function TopicResourceHeader({ topic }: { topic: string }) {
+export function TopicResourceHeader({ subtopic }: { subtopic: string }) {
+  const topic = subtopic
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
