@@ -6,4 +6,7 @@ export default defineCliConfig({
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
   },
   studioHost: 'matrstudio',
+  deployment: {
+    appId: 'iib0idwml9exwym5htmon3r6',
+  },
 })
