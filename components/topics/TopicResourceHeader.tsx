@@ -3,6 +3,29 @@
 import { useState, useRef, useEffect } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 
+const SUBTOPIC_LABELS: Record<string, string> = {
+  'design-systems':        'Design Systems',
+  'design-handoff':        'Design Handoff',
+  'prototyping':           'Prototyping',
+  'documentation':         'Documentation',
+  'visual-architecture':   'Visual Architecture',
+  'design-rationale':      'Design Rationale',
+  'stakeholder-management':'Stakeholder Management',
+  'product-thinking':      'Product Thinking',
+  'user-research':         'User Research',
+  'design-ethics':         'Design Ethics',
+  'product-analytics':     'Product Analytics',
+  'conversion-optimization':'Conversion Optimization',
+  'seo-optimization':      'SEO Optimization',
+  'growth-design':         'Growth Design',
+  'marketing-strategy':    'Marketing & Strategy',
+  'career-strategy':       'Career Strategy',
+  'portfolio-case-studies':'Portfolio & Case Studies',
+  'ai-assisted-workflow':  'AI-Assisted Workflow',
+  'accessibility':         'Accessibility',
+  'workflow-optimization': 'Workflow Optimization',
+}
+
 const TYPE_FILTERS = [
   { label: 'All',      value: '',         color: '#9CA3AF' },
   { label: 'Article',  value: 'article',  color: '#4A7AB8' },
@@ -14,11 +37,15 @@ const TYPE_FILTERS = [
   { label: 'Podcast',  value: 'podcast',  color: '#7C3AED' },
 ]
 
-export function TopicResourceHeader({ subtopic }: { subtopic: string }) {
-  const topic = subtopic
+export function TopicResourceHeader() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const subtopicParam = searchParams.get('subtopic') ?? ''
+  const selected = subtopicParam ? subtopicParam.split(',') : []
+  const topic = selected.length === 1
+    ? (SUBTOPIC_LABELS[selected[0]] ?? selected[0])
+    : ''
   const currentType = searchParams.get('type') ?? ''
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -40,12 +67,24 @@ export function TopicResourceHeader({ subtopic }: { subtopic: string }) {
 
   return (
     <div className="flex items-center justify-between">
-      <p className="text-sm text-muted-foreground">
-        {topic
-          ? <>Resources on <span className="text-primary">'{topic}'</span></>
-          : 'All Resources'
-        }
-      </p>
+      <div className="flex items-center gap-3">
+        <p className="text-sm text-muted-foreground">
+          {selected.length === 0
+            ? 'All Resources'
+            : selected.length === 1
+              ? <>Resources on <span className="text-primary">'{topic}'</span></>
+              : <><span className="text-primary">{selected.length} topics</span> selected</>
+          }
+        </p>
+        {selected.length > 0 && (
+          <button
+            onClick={() => router.push(pathname)}
+            className="text-xs text-muted-foreground/70 hover:text-foreground transition-colors underline underline-offset-2"
+          >
+            Clear all selections
+          </button>
+        )}
+      </div>
 
       <div ref={ref} className="relative shrink-0">
         <button

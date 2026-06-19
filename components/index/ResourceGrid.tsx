@@ -37,13 +37,13 @@ export function ResourceGrid({ resources, heading = 'Most Recent Resources', hea
   return (
     <div className="flex flex-col gap-[64px]">
       <section>
-        <div className="mb-5">{headingNode ?? <p className="text-sm text-muted-foreground">{heading}</p>}</div>
+        <div className="mb-5">{headingNode ?? <p className="text-sm text-muted-foreground capitalize">{heading}</p>}</div>
         <Grid resources={recent} mobileLimit={3} />
       </section>
 
       {older.length > 0 && (
         <section>
-          <p className="mb-5 text-sm text-muted-foreground">Older Resources</p>
+          <p className="mb-5 text-sm text-muted-foreground capitalize">Older Resources</p>
           <Grid resources={older} />
         </section>
       )}

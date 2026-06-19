@@ -53,15 +53,46 @@ const TOPICS = [
 export function TopicBrowser() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const activeSubtopic = searchParams.get('subtopic') ?? ''
+  const subtopicParam = searchParams.get('subtopic') ?? ''
+  const activeSubtopics = subtopicParam ? subtopicParam.split(',') : []
   const [openCategory, setOpenCategory] = useState<string | null>(null)
 
-  function select(category: string, subtopic: string) {
-    if (activeSubtopic === subtopic) {
-      router.push('/topics')
+  function toggle(subtopic: string) {
+    const next = activeSubtopics.includes(subtopic)
+      ? activeSubtopics.filter((s) => s !== subtopic)
+      : [...activeSubtopics, subtopic]
+
+    const params = new URLSearchParams(searchParams.toString())
+    if (next.length > 0) {
+      params.set('subtopic', next.join(','))
     } else {
-      router.push(`/topics?category=${encodeURIComponent(category)}&subtopic=${encodeURIComponent(subtopic)}`)
+      params.delete('subtopic')
+      params.delete('category')
     }
+    router.push(`/topics?${params.toString()}`)
+  }
+
+  function SubtopicList({ subtopics }: { subtopics: { label: string; value: string }[] }) {
+    return (
+      <ul className="flex flex-col gap-1">
+        {subtopics.map((sub) => {
+          const isActive = activeSubtopics.includes(sub.value)
+          return (
+            <li key={sub.value}>
+              <button
+                onClick={() => toggle(sub.value)}
+                className={[
+                  'text-left text-[14px] transition-colors',
+                  isActive ? 'text-primary font-medium' : 'text-[#040404]/60 hover:text-primary',
+                ].join(' ')}
+              >
+                {sub.label}
+              </button>
+            </li>
+          )
+        })}
+      </ul>
+    )
   }
 
   return (
@@ -76,23 +107,7 @@ export function TopicBrowser() {
             >
               {label}<span className="text-primary">.</span>
             </h2>
-            <ul className="flex flex-col gap-1">
-              {subtopics.map((sub) => (
-                <li key={sub.value}>
-                  <button
-                    onClick={() => select(value, sub.value)}
-                    className={[
-                      'text-left text-[14px] transition-colors',
-                      activeSubtopic === sub.value
-                        ? 'text-primary'
-                        : 'text-[#040404]/60 hover:text-primary',
-                    ].join(' ')}
-                  >
-                    {sub.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
+            <SubtopicList subtopics={subtopics} />
           </div>
         ))}
       </div>
@@ -125,23 +140,9 @@ export function TopicBrowser() {
               </button>
 
               {isOpen && (
-                <ul className="flex flex-col gap-1 pb-4">
-                  {subtopics.map((sub) => (
-                    <li key={sub.value}>
-                      <button
-                        onClick={() => select(value, sub.value)}
-                        className={[
-                          'text-left text-[14px] transition-colors py-1',
-                          activeSubtopic === sub.value
-                            ? 'text-primary'
-                            : 'text-[#040404]/60 hover:text-primary',
-                        ].join(' ')}
-                      >
-                        {sub.label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                <div className="pb-4">
+                  <SubtopicList subtopics={subtopics} />
+                </div>
               )}
             </div>
           )

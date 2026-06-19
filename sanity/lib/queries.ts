@@ -61,3 +61,14 @@ export const filteredResourcesQuery = groq`
     ${resourceFields}
   }
 `
+
+export const filteredResourcesQueryMulti = groq`
+  *[_type == "resource"
+    && ($category == "" || category == $category)
+    && ($type == "" || resourceType == $type)
+    && (count($subtopics) == 0 || subtopic in $subtopics)
+    && ($q == "" || title match $q + "*" || summary match $q + "*" || $q in tags)
+  ] | order(publishedAt desc) {
+    ${resourceFields}
+  }
+`
