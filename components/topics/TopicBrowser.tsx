@@ -53,7 +53,7 @@ export function TopicBrowser() {
                     'text-left text-sm transition-colors',
                     active === sub
                       ? 'text-primary'
-                      : 'text-foreground hover:text-primary',
+                      : 'text-[#040404]/60 hover:text-primary',
                   ].join(' ')}
                 >
                   {sub}
