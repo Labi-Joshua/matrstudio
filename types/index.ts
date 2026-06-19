@@ -5,7 +5,7 @@ export interface Resource {
   title: string
   slug: { current: string }
   resourceType?: 'article' | 'video' | 'book' | 'tool' | 'course' | 'template' | 'podcast'
-  category: 'craft' | 'brand-strategy' | 'operations-ai' | 'motion-interaction' | 'growth-marketing' | 'editorial-curation'
+  category: 'design-execution' | 'strategic-thinking' | 'business-growth' | 'career-craft'
   author?: string
   tags?: string[]
   summary?: string

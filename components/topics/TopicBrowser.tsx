@@ -5,18 +5,22 @@ import { useRouter, useSearchParams } from 'next/navigation'
 const TOPICS = [
   {
     label: 'Design Execution',
+    value: 'design-execution',
     subtopics: ['Design Systems', 'Design Handoff', 'Prototyping', 'Documentation', 'Visual Architecture'],
   },
   {
     label: 'Strategic Thinking',
+    value: 'strategic-thinking',
     subtopics: ['Design Rationale', 'Stakeholder Management', 'Product Thinking', 'User Research', 'Design Ethics'],
   },
   {
     label: 'Business & Growth',
+    value: 'business-growth',
     subtopics: ['Product Analytics', 'Conversion Optimization', 'SEO Optimization', 'Growth Design', 'Marketing & Strategy'],
   },
   {
     label: 'Career & Craft',
+    value: 'career-craft',
     subtopics: ['Career Strategy', 'Portfolio & Case Studies', 'AI-Assisted Workflow', 'Accessibility', 'Workflow Optimization'],
   },
 ]
@@ -26,18 +30,18 @@ export function TopicBrowser() {
   const searchParams = useSearchParams()
   const active = searchParams.get('t') ?? ''
 
-  function select(subtopic: string) {
+  function select(category: string, subtopic: string) {
     if (active === subtopic) {
       router.push('/topics')
     } else {
-      router.push(`/topics?t=${encodeURIComponent(subtopic)}`)
+      router.push(`/topics?category=${encodeURIComponent(category)}&t=${encodeURIComponent(subtopic)}`)
     }
   }
 
   return (
     <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4">
-      {TOPICS.map(({ label, subtopics }) => (
-        <div key={label}>
+      {TOPICS.map(({ label, value, subtopics }) => (
+        <div key={value}>
           <h2
             className="mb-3 text-[20px] font-normal leading-snug text-foreground"
             style={{ fontFamily: 'Georgia, serif' }}
@@ -48,7 +52,7 @@ export function TopicBrowser() {
             {subtopics.map((sub) => (
               <li key={sub}>
                 <button
-                  onClick={() => select(sub)}
+                  onClick={() => select(value, sub)}
                   className={[
                     'text-left text-[14px] transition-colors',
                     active === sub

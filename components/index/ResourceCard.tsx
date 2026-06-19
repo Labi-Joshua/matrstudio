@@ -8,12 +8,10 @@ interface Props {
 }
 
 const TOPIC_LABELS: Record<string, string> = {
-  'craft':               'Craft & Fundamentals',
-  'brand-strategy':      'Brand & Strategy',
-  'operations-ai':       'Operations & AI',
-  'motion-interaction':  'Motion & Interaction',
-  'growth-marketing':    'Growth Marketing',
-  'editorial-curation':  'Editorial & Curation',
+  'design-execution':   'Design Execution',
+  'strategic-thinking': 'Strategic Thinking',
+  'business-growth':    'Business & Growth',
+  'career-craft':       'Career & Craft',
 }
 
 const TYPE_COLORS: Record<string, string> = {

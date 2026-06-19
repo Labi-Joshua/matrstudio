@@ -42,12 +42,10 @@ export const resource = defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'Craft & Fundamentals', value: 'craft' },
-          { title: 'Brand & Strategy',     value: 'brand-strategy' },
-          { title: 'Operations & AI',      value: 'operations-ai' },
-          { title: 'Motion & Interaction', value: 'motion-interaction' },
-          { title: 'Growth Marketing',     value: 'growth-marketing' },
-          { title: 'Editorial & Curation', value: 'editorial-curation' },
+          { title: 'Design Execution',  value: 'design-execution' },
+          { title: 'Strategic Thinking', value: 'strategic-thinking' },
+          { title: 'Business & Growth', value: 'business-growth' },
+          { title: 'Career & Craft',    value: 'career-craft' },
         ],
       },
       validation: (Rule) => Rule.required(),

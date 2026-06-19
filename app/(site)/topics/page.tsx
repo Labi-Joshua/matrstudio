@@ -16,8 +16,9 @@ export default async function TopicsPage({
   const params = await searchParams
   const t = params.t ?? ''
   const type = params.type ?? ''
+  const category = params.category ?? ''
 
-  const resources = await client.fetch<Resource[]>(filteredResourcesQuery, { category: '', type, q: t })
+  const resources = await client.fetch<Resource[]>(filteredResourcesQuery, { category, type, q: t })
 
   return (
     <div>

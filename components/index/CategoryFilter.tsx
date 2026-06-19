@@ -4,13 +4,11 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { useState, useRef, useEffect, useCallback } from 'react'
 
 const CATEGORIES = [
-  { label: 'All Topics',           value: '' },
-  { label: 'Craft & Fundamentals', value: 'craft' },
-  { label: 'Brand & Strategy',     value: 'brand-strategy' },
-  { label: 'Operations & AI',      value: 'operations-ai' },
-  { label: 'Motion & Interaction', value: 'motion-interaction' },
-  { label: 'Growth Marketing',     value: 'growth-marketing' },
-  { label: 'Editorial & Curation', value: 'editorial-curation' },
+  { label: 'All Topics',          value: '' },
+  { label: 'Design Execution',    value: 'design-execution' },
+  { label: 'Strategic Thinking',  value: 'strategic-thinking' },
+  { label: 'Business & Growth',   value: 'business-growth' },
+  { label: 'Career & Craft',      value: 'career-craft' },
 ]
 
 const TYPE_FILTERS = [
