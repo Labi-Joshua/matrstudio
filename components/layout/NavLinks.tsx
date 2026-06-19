@@ -7,7 +7,7 @@ export function NavLinks() {
   const pathname = usePathname()
 
   return (
-    <div className="hidden md:flex items-center gap-5 text-sm font-medium">
+    <div className="hidden md:flex items-center gap-5 text-sm font-medium leading-none">
       <Link
         href="/"
         className={pathname === '/' ? 'text-primary' : 'text-muted-foreground hover:text-foreground transition-colors'}
