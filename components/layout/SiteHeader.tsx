@@ -2,14 +2,18 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Suspense } from 'react'
 import { SearchInput } from './SearchInput'
+import { NavLinks } from './NavLinks'
 
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 w-full bg-background">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-[16px] sm:px-6 lg:px-8">
-        <Link href="/" className="shrink-0">
-          <Image src="/matrstudio..png" alt="Matrstudio" width={95} height={15} priority />
-        </Link>
+        <div className="flex items-center gap-6 shrink-0">
+          <Link href="/">
+            <Image src="/matrstudio..png" alt="Matrstudio" width={95} height={15} priority />
+          </Link>
+          <NavLinks />
+        </div>
 
         <div className="flex items-center gap-3">
           {/* Full search bar — desktop only */}
