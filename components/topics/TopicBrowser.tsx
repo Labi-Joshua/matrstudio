@@ -39,12 +39,12 @@ export function TopicBrowser() {
       {TOPICS.map(({ label, subtopics }) => (
         <div key={label}>
           <h2
-            className="mb-4 text-[15px] font-semibold text-foreground"
+            className="mb-4 text-[20px] font-normal leading-snug text-foreground"
             style={{ fontFamily: 'Georgia, serif' }}
           >
             {label}<span className="text-primary">.</span>
           </h2>
-          <ul className="flex flex-col gap-2.5">
+          <ul className="flex flex-col gap-3">
             {subtopics.map((sub) => (
               <li key={sub}>
                 <button
@@ -52,8 +52,8 @@ export function TopicBrowser() {
                   className={[
                     'text-left text-sm transition-colors',
                     active === sub
-                      ? 'font-medium text-primary'
-                      : 'text-muted-foreground hover:text-foreground',
+                      ? 'text-primary'
+                      : 'text-foreground hover:text-primary',
                   ].join(' ')}
                 >
                   {sub}
