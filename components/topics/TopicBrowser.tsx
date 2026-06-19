@@ -39,7 +39,7 @@ export function TopicBrowser() {
       {TOPICS.map(({ label, subtopics }) => (
         <div key={label}>
           <h2
-            className="mb-4 text-[20px] font-normal leading-snug text-foreground"
+            className="mb-3 text-[20px] font-normal leading-snug text-foreground"
             style={{ fontFamily: 'Georgia, serif' }}
           >
             {label}<span className="text-primary">.</span>
