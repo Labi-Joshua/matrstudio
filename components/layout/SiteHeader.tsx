@@ -3,10 +3,11 @@ import Image from 'next/image'
 import { Suspense } from 'react'
 import { SearchInput } from './SearchInput'
 import { NavLinks } from './NavLinks'
+import { MobileNav } from './MobileNav'
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 w-full bg-background">
+    <header className="sticky top-0 z-40 w-full bg-background relative">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-[16px] sm:px-6 lg:px-8">
         <div className="flex items-end gap-6 shrink-0">
           <Link href="/" className="flex items-center">
@@ -39,6 +40,7 @@ export function SiteHeader() {
           >
             Submit a Resource
           </Link>
+          <MobileNav />
         </div>
       </div>
     </header>
