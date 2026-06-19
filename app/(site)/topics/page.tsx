@@ -21,7 +21,7 @@ export default async function TopicsPage({
 
   return (
     <div>
-      <section className="mx-auto max-w-7xl px-4 pt-[80px] pb-10 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 pt-[80px] pb-[64px] sm:px-6 lg:px-8">
         <Suspense>
           <TopicBrowser />
         </Suspense>
