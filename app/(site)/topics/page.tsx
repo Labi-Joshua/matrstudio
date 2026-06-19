@@ -30,14 +30,12 @@ export default async function TopicsPage({
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pb-[64px] sm:px-6 lg:px-8">
-        <ResourceGrid
-          resources={resources}
-          headingNode={
-            <Suspense>
-              <TopicResourceHeader />
-            </Suspense>
-          }
-        />
+        <div className="mb-5">
+          <Suspense>
+            <TopicResourceHeader />
+          </Suspense>
+        </div>
+        <ResourceGrid resources={resources} />
       </section>
     </div>
   )
