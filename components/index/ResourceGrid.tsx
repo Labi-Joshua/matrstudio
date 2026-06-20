@@ -5,9 +5,10 @@ interface Props {
   resources: Resource[]
   heading?: string
   headingNode?: React.ReactNode
+  priorityCount?: number
 }
 
-function Grid({ resources, mobileLimit }: { resources: Resource[]; mobileLimit?: number }) {
+function Grid({ resources, mobileLimit, priorityCount = 0 }: { resources: Resource[]; mobileLimit?: number; priorityCount?: number }) {
   return (
     <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
       {resources.map((resource, i) => (
@@ -15,14 +16,14 @@ function Grid({ resources, mobileLimit }: { resources: Resource[]; mobileLimit?:
           key={resource._id}
           className={mobileLimit !== undefined && i >= mobileLimit ? 'hidden sm:flex sm:flex-col' : 'flex flex-col'}
         >
-          <ResourceCard resource={resource} />
+          <ResourceCard resource={resource} priority={i < priorityCount} />
         </div>
       ))}
     </div>
   )
 }
 
-export function ResourceGrid({ resources, heading = 'Most Recent Resources', headingNode }: Props) {
+export function ResourceGrid({ resources, heading = 'Most Recent Resources', headingNode, priorityCount = 3 }: Props) {
   if (resources.length === 0) {
     return (
       <div className="py-24 text-center">
@@ -38,7 +39,7 @@ export function ResourceGrid({ resources, heading = 'Most Recent Resources', hea
     <div className="flex flex-col gap-[64px]">
       <section>
         <div className="mb-5">{headingNode ?? <p className="text-sm text-muted-foreground capitalize">{heading}</p>}</div>
-        <Grid resources={recent} mobileLimit={3} />
+        <Grid resources={recent} mobileLimit={3} priorityCount={priorityCount} />
       </section>
 
       {older.length > 0 && (

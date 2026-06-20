@@ -6,8 +6,12 @@ import type { Resource } from '@/types'
 import { urlFor } from '@/sanity/lib/image'
 import { ResourcePreviewModal } from './ResourcePreviewModal'
 
+// Tiny 10×10 gray PNG used as blur placeholder while images load
+const BLUR_PLACEHOLDER = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mNkYGD4z8BQDwAEgAF/QualIQAAAABJRU5ErkJggg=='
+
 interface Props {
   resource: Resource
+  priority?: boolean
 }
 
 const TOPIC_LABELS: Record<string, string> = {
@@ -36,7 +40,7 @@ function capitalize(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
-export function ResourceCard({ resource }: Props) {
+export function ResourceCard({ resource, priority = false }: Props) {
   const [previewOpen, setPreviewOpen] = useState(false)
   const domain = getDomain(resource.externalUrl)
   const resourceType = resource.resourceType
@@ -61,6 +65,9 @@ export function ResourceCard({ resource }: Props) {
               src={imageSrc}
               alt={resource.title}
               fill
+              priority={priority}
+              placeholder="blur"
+              blurDataURL={BLUR_PLACEHOLDER}
               className="object-cover transition-opacity duration-300 group-hover:opacity-90"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
