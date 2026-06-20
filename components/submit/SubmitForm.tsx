@@ -78,9 +78,9 @@ export function SubmitForm() {
     e.preventDefault()
     if (!isValid) return
     setLoading(true)
-    const res = await fetch('https://formspree.io/f/xqeornjo', {
+    const res = await fetch('/api/submit', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         title,
         url: normalizedUrl,
