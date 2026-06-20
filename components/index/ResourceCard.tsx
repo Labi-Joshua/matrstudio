@@ -1,7 +1,10 @@
-import Link from 'next/link'
+'use client'
+
+import { useState } from 'react'
 import Image from 'next/image'
 import type { Resource } from '@/types'
 import { urlFor } from '@/sanity/lib/image'
+import { ResourcePreviewModal } from './ResourcePreviewModal'
 
 interface Props {
   resource: Resource
@@ -34,7 +37,7 @@ function capitalize(s: string) {
 }
 
 export function ResourceCard({ resource }: Props) {
-  const href = resource.externalUrl ?? `/resources/${resource.slug.current}`
+  const [previewOpen, setPreviewOpen] = useState(false)
   const domain = getDomain(resource.externalUrl)
   const resourceType = resource.resourceType
 
@@ -47,57 +50,61 @@ export function ResourceCard({ resource }: Props) {
     ?? null
 
   return (
-    <Link
-      href={href}
-      target={resource.externalUrl ? '_blank' : undefined}
-      rel={resource.externalUrl ? 'noopener noreferrer' : undefined}
-      className="group flex flex-col gap-3"
-    >
-      <div className="relative aspect-[345/200] w-full overflow-hidden rounded-[12px] bg-muted">
-        {imageSrc && (
-          <Image
-            src={imageSrc}
-            alt={resource.title}
-            fill
-            className="object-cover transition-opacity duration-300 group-hover:opacity-90"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          />
-        )}
-        {(resourceType || domain) && (
-          <div className="absolute bottom-3 right-3 flex items-center gap-1.5">
-            {resourceType && (
-              <span className="flex items-center gap-1.5 rounded-[6px] bg-white px-3 py-1.5 text-[12px] font-medium text-foreground shadow-sm">
-                <span
-                  className="size-2.5 shrink-0 rounded-full"
-                  style={{ backgroundColor: TYPE_COLORS[resourceType] ?? '#9CA3AF' }}
-                />
-                {capitalize(resourceType)}
-              </span>
-            )}
-            {domain && (
-              <span className="rounded-[6px] bg-white px-3 py-1.5 text-[12px] font-medium text-foreground shadow-sm">
-                {domain}
-              </span>
-            )}
-          </div>
-        )}
-      </div>
+    <>
+      <button
+        onClick={() => setPreviewOpen(true)}
+        className="group flex h-full flex-col gap-3 text-left"
+      >
+        <div className="relative aspect-[345/200] w-full overflow-hidden rounded-[12px] bg-muted">
+          {imageSrc && (
+            <Image
+              src={imageSrc}
+              alt={resource.title}
+              fill
+              className="object-cover transition-opacity duration-300 group-hover:opacity-90"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            />
+          )}
+          {(resourceType || domain) && (
+            <div className="absolute bottom-3 right-3 flex items-center gap-1.5">
+              {resourceType && (
+                <span className="flex items-center gap-1.5 rounded-[6px] bg-white px-3 py-1.5 text-[12px] font-medium text-foreground shadow-sm">
+                  <span
+                    className="size-2.5 shrink-0 rounded-full"
+                    style={{ backgroundColor: TYPE_COLORS[resourceType] ?? '#9CA3AF' }}
+                  />
+                  {capitalize(resourceType)}
+                </span>
+              )}
+              {domain && (
+                <span className="rounded-[6px] bg-white px-3 py-1.5 text-[12px] font-medium text-foreground shadow-sm">
+                  {domain}
+                </span>
+              )}
+            </div>
+          )}
+        </div>
 
-      <div className="flex flex-col gap-1">
-        <h2 className="text-[24px] leading-snug tracking-tight text-foreground transition-colors group-hover:text-foreground/75" style={{ fontFamily: 'Georgia, serif' }}>
-          {resource.title}
-        </h2>
-        {resource.summary && (
-          <p className="line-clamp-2 text-sm leading-relaxed text-muted-foreground">
-            {resource.summary}
-          </p>
-        )}
-        {displayMeta && (
-          <p className="mt-[6px] text-sm text-primary" style={{ fontFamily: 'var(--font-ibm-plex-mono)' }}>
-            {displayMeta}
-          </p>
-        )}
-      </div>
-    </Link>
+        <div className="flex flex-1 flex-col gap-1">
+          <h2 className="line-clamp-2 h-[66px] text-[24px] leading-snug tracking-tight text-foreground transition-colors group-hover:text-foreground/75" style={{ fontFamily: 'Georgia, serif' }}>
+            {resource.title}
+          </h2>
+          {resource.summary && (
+            <p className="line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+              {resource.summary}
+            </p>
+          )}
+          {displayMeta && (
+            <p className="mt-auto pt-[6px] text-sm text-primary" style={{ fontFamily: 'var(--font-ibm-plex-mono)' }}>
+              {displayMeta}
+            </p>
+          )}
+        </div>
+      </button>
+
+      {previewOpen && (
+        <ResourcePreviewModal resource={resource} onClose={() => setPreviewOpen(false)} />
+      )}
+    </>
   )
 }

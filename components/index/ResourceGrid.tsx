@@ -13,7 +13,7 @@ function Grid({ resources, mobileLimit }: { resources: Resource[]; mobileLimit?:
       {resources.map((resource, i) => (
         <div
           key={resource._id}
-          className={mobileLimit !== undefined && i >= mobileLimit ? 'hidden sm:block' : undefined}
+          className={mobileLimit !== undefined && i >= mobileLimit ? 'hidden sm:flex sm:flex-col' : 'flex flex-col'}
         >
           <ResourceCard resource={resource} />
         </div>
