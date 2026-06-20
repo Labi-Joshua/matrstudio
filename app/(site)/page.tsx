@@ -56,7 +56,7 @@ export default async function HomePage({
               <path strokeLinecap="round" d="M13 13l3.5 3.5" />
             </svg>
             <Suspense fallback={<div className="flex-1" />}>
-              <SearchInput inputClassName="text-[16px]" dropdownClassName="left-0 w-full" />
+              <SearchInput inputClassName="text-[16px]" fullWidthOnMobile />
             </Suspense>
           </div>
           <Suspense>
