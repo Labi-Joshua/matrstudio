@@ -18,6 +18,8 @@ function getYouTubeId(url: string): string | null {
   return m?.[1] ?? null
 }
 
+const BLUR_PLACEHOLDER = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mNkYGD4z8BQDwAEgAF/QualIQAAAABJRU5ErkJggg=='
+
 function getVimeoId(url: string): string | null {
   const m = url.match(/vimeo\.com\/(\d+)/)
   return m?.[1] ?? null
@@ -110,6 +112,9 @@ export function ResourcePreviewModal({ resource, onClose }: Props) {
                 src={ytThumb}
                 alt={resource.title}
                 fill
+                priority
+                placeholder="blur"
+                blurDataURL={BLUR_PLACEHOLDER}
                 className="object-cover transition-opacity duration-200 group-hover:opacity-80"
                 unoptimized
               />
@@ -135,7 +140,7 @@ export function ResourcePreviewModal({ resource, onClose }: Props) {
         {/* Thumbnail for non-video resources */}
         {!ytId && !vimeoId && heroSrc && (
           <div className="relative aspect-[16/9] w-full overflow-hidden rounded-t-2xl">
-            <Image src={heroSrc} alt={resource.title} fill className="object-cover" />
+            <Image src={heroSrc} alt={resource.title} fill priority placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} className="object-cover" />
           </div>
         )}
 
