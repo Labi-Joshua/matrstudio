@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-const NOTIFY_EMAIL = 'jospecial34@gmail.com'
+const NOTIFY_EMAIL = 'dashcoalition@gmail.com'
 
 export async function POST(req: Request) {
   const { title, url, topic, creator, email, rationale } = await req.json()
