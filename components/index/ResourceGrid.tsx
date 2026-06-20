@@ -43,7 +43,7 @@ export function ResourceGrid({ resources, heading = 'Most Recent Resources', hea
 
       {older.length > 0 && (
         <section>
-          <p className="mb-5 text-sm text-muted-foreground capitalize">Older Resources</p>
+          <p className="mb-5 text-sm text-muted-foreground capitalize">More Resources</p>
           <Grid resources={older} />
         </section>
       )}
