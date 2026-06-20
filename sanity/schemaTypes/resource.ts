@@ -105,6 +105,13 @@ export const resource = defineType({
       type: 'url',
     }),
     defineField({
+      name: 'embedUrl',
+      title: 'Embed URL',
+      type: 'url',
+      description: 'Paste the embed link for the video (e.g. https://www.youtube.com/embed/VIDEO_ID). Only available for Video resources.',
+      hidden: ({ document }) => document?.resourceType !== 'video',
+    }),
+    defineField({
       name: 'thumbnailUrl',
       title: 'Thumbnail URL',
       type: 'string',

@@ -39,6 +39,7 @@ interface Props {
 
 export function ResourcePreviewModal({ resource, onClose }: Props) {
   const url = resource.externalUrl ?? ''
+  const embedUrl = resource.embedUrl ?? ''
   const ytId = url ? getYouTubeId(url) : null
   const vimeoId = url ? getVimeoId(url) : null
 
@@ -87,8 +88,20 @@ export function ResourcePreviewModal({ resource, onClose }: Props) {
           </svg>
         </button>
 
+        {/* Embed URL player — shown when editor has provided an embed link */}
+        {embedUrl && (
+          <div className="aspect-video w-full overflow-hidden rounded-t-2xl bg-black">
+            <iframe
+              src={embedUrl}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="size-full"
+            />
+          </div>
+        )}
+
         {/* Vimeo embed (reliable) */}
-        {vimeoId && (
+        {!embedUrl && vimeoId && (
           <div className="aspect-video w-full overflow-hidden rounded-t-2xl bg-black">
             <iframe
               src={`https://player.vimeo.com/video/${vimeoId}?dnt=1`}
@@ -100,7 +113,7 @@ export function ResourcePreviewModal({ resource, onClose }: Props) {
         )}
 
         {/* YouTube: thumbnail + play button → opens YouTube directly */}
-        {ytId && (
+        {!embedUrl && ytId && (
           <a
             href={url}
             target="_blank"
