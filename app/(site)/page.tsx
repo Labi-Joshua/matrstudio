@@ -1,11 +1,12 @@
 import { Suspense } from 'react'
 import { IndexHero } from '@/components/index/IndexHero'
 import { ResourceGrid } from '@/components/index/ResourceGrid'
+import { ResourceCard } from '@/components/index/ResourceCard'
 import { CategoryFilter } from '@/components/index/CategoryFilter'
 import { TypeFilterButton } from '@/components/index/TypeFilterButton'
 import { SearchInput } from '@/components/layout/SearchInput'
 import { client } from '@/sanity/lib/client'
-import { filteredResourcesQuery } from '@/sanity/lib/queries'
+import { filteredResourcesQuery, featuredResourcesQuery } from '@/sanity/lib/queries'
 import type { Resource } from '@/types'
 
 export const revalidate = 60
@@ -20,7 +21,12 @@ export default async function HomePage({
   const type = params.type ?? ''
   const q = params.q ?? ''
 
-  const resources = await client.fetch<Resource[]>(filteredResourcesQuery, { category, type, subtopic: '', q })
+  const isFiltered = !!(category || type || q)
+
+  const [resources, featured] = await Promise.all([
+    client.fetch<Resource[]>(filteredResourcesQuery, { category, type, subtopic: '', q }),
+    isFiltered ? Promise.resolve([]) : client.fetch<Resource[]>(featuredResourcesQuery),
+  ])
 
   const CATEGORY_LABELS: Record<string, string> = {
     'design-execution':   'Design Execution',
@@ -63,6 +69,20 @@ export default async function HomePage({
         <Suspense>
           <CategoryFilter />
         </Suspense>
+
+        {featured.length > 0 && (
+          <div className="mb-[64px]">
+            <p className="mb-5 text-sm text-muted-foreground">Featured</p>
+            <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              {featured.map((resource) => (
+                <div key={resource._id} className="flex flex-col">
+                  <ResourceCard resource={resource} />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <ResourceGrid resources={resources} heading={heading} />
       </section>
     </div>
