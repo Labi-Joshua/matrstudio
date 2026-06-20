@@ -58,7 +58,9 @@ export function TopicBrowser() {
   const [openCategory, setOpenCategory] = useState<string | null>(null)
 
   function toggle(subtopic: string) {
-    const next = activeSubtopics.includes(subtopic)
+    const isActive = activeSubtopics.includes(subtopic)
+    if (!isActive && activeSubtopics.length >= 4) return
+    const next = isActive
       ? activeSubtopics.filter((s) => s !== subtopic)
       : [...activeSubtopics, subtopic]
 
