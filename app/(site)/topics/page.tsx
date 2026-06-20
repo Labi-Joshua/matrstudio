@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import type { Metadata } from 'next'
 import { TopicBrowser } from '@/components/topics/TopicBrowser'
 import { TopicResourceHeader } from '@/components/topics/TopicResourceHeader'
 import { ResourceGrid } from '@/components/index/ResourceGrid'
@@ -7,6 +8,12 @@ import { filteredResourcesQueryMulti } from '@/sanity/lib/queries'
 import type { Resource } from '@/types'
 
 export const revalidate = 60
+
+export const metadata: Metadata = {
+  title: 'Browse Design Resources by Topic',
+  description: 'Explore curated design resources organized by topic — design systems, UX research, product thinking, career strategy, and more.',
+  alternates: { canonical: '/topics' },
+}
 
 export default async function TopicsPage({
   searchParams,
@@ -24,6 +31,7 @@ export default async function TopicsPage({
   return (
     <div>
       <section className="mx-auto max-w-7xl px-4 pt-[32px] md:pt-[80px] pb-[64px] sm:px-6 lg:px-8">
+        <h1 className="sr-only">Browse Design Resources by Topic</h1>
         <Suspense>
           <TopicBrowser />
         </Suspense>

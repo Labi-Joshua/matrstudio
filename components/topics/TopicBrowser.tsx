@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 
 const TOPICS = [
   {
@@ -52,26 +52,25 @@ const TOPICS = [
 
 export function TopicBrowser() {
   const router = useRouter()
+  const pathname = usePathname()
   const searchParams = useSearchParams()
+
+  const pathMatch = pathname.match(/^\/topics\/([^/?]+)/)
+  const subtopicFromPath = pathMatch?.[1] ?? ''
   const subtopicParam = searchParams.get('subtopic') ?? ''
-  const activeSubtopics = subtopicParam ? subtopicParam.split(',') : []
+  const activeSubtopics = subtopicFromPath
+    ? [subtopicFromPath]
+    : subtopicParam ? subtopicParam.split(',') : []
+
   const [openCategory, setOpenCategory] = useState<string | null>(null)
 
   function toggle(subtopic: string) {
     const isActive = activeSubtopics.includes(subtopic)
-    if (!isActive && activeSubtopics.length >= 4) return
-    const next = isActive
-      ? activeSubtopics.filter((s) => s !== subtopic)
-      : [...activeSubtopics, subtopic]
-
-    const params = new URLSearchParams(searchParams.toString())
-    if (next.length > 0) {
-      params.set('subtopic', next.join(','))
+    if (isActive) {
+      router.push('/topics')
     } else {
-      params.delete('subtopic')
-      params.delete('category')
+      router.push(`/topics/${subtopic}`)
     }
-    router.push(`/topics?${params.toString()}`)
   }
 
   function SubtopicList({ subtopics }: { subtopics: { label: string; value: string }[] }) {
@@ -81,15 +80,28 @@ export function TopicBrowser() {
           const isActive = activeSubtopics.includes(sub.value)
           return (
             <li key={sub.value}>
-              <button
-                onClick={() => toggle(sub.value)}
-                className={[
-                  'text-left text-[14px] transition-colors',
-                  isActive ? 'text-primary font-medium' : 'text-[#040404]/60 hover:text-primary',
-                ].join(' ')}
-              >
-                {sub.label}
-              </button>
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => toggle(sub.value)}
+                  className={[
+                    'text-left text-[14px] transition-colors',
+                    isActive ? 'text-primary font-medium' : 'text-[#040404]/60 hover:text-primary',
+                  ].join(' ')}
+                >
+                  {sub.label}
+                </button>
+                {isActive && (
+                  <button
+                    onClick={() => toggle(sub.value)}
+                    aria-label={`Remove ${sub.label}`}
+                    className="hidden md:inline-flex items-center justify-center size-3.5 rounded-full bg-primary/15 text-primary hover:bg-primary/25 transition-colors"
+                  >
+                    <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" className="size-2">
+                      <path d="M2.5 2.5l5 5M7.5 2.5l-5 5" />
+                    </svg>
+                  </button>
+                )}
+              </div>
             </li>
           )
         })}

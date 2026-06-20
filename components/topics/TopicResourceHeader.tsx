@@ -41,8 +41,13 @@ export function TopicResourceHeader() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+
+  const pathMatch = pathname.match(/^\/topics\/([^/?]+)/)
+  const subtopicFromPath = pathMatch?.[1] ?? ''
   const subtopicParam = searchParams.get('subtopic') ?? ''
-  const selected = subtopicParam ? subtopicParam.split(',') : []
+  const selected = subtopicFromPath
+    ? [subtopicFromPath]
+    : subtopicParam ? subtopicParam.split(',') : []
   const topic = selected.length === 1
     ? (SUBTOPIC_LABELS[selected[0]] ?? selected[0])
     : ''
@@ -78,7 +83,7 @@ export function TopicResourceHeader() {
         </p>
         {selected.length > 0 && (
           <button
-            onClick={() => router.push(pathname)}
+            onClick={() => router.push('/topics')}
             className="text-xs text-muted-foreground/70 hover:text-foreground transition-colors underline underline-offset-2"
           >
             Clear all selections
