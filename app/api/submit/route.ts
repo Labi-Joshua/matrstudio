@@ -4,15 +4,14 @@ import { NextResponse } from 'next/server'
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 const NOTIFY_EMAIL = 'dashcoalition@gmail.com'
-const LOGO_URL = 'https://resources.matrstudio.com/matr-icon.png'
+const LOGO_URL = 'https://resources.matrstudio.com/matr-logo.png'
 const BASE_URL = 'https://resources.matrstudio.com'
 
 const emailHeader = `
   <div style="text-align: center; padding: 32px 24px 24px; border-bottom: 1px solid #f0f0f0; margin-bottom: 32px;">
     <a href="${BASE_URL}" style="display: inline-block;">
-      <img src="${LOGO_URL}" alt="Matr Studio" width="48" height="48" style="display: block; margin: 0 auto 12px; border-radius: 10px;" />
+      <img src="${LOGO_URL}" alt="Matr Studio" width="160" style="display: block; margin: 0 auto;" />
     </a>
-    <p style="font-family: Georgia, serif; font-size: 15px; color: #1a1a1a; margin: 0; letter-spacing: 0.02em;">Matr Studio</p>
   </div>
 `
 
