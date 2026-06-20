@@ -5,6 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 const NOTIFY_EMAIL = 'dashcoalition@gmail.com'
 const LOGO_URL = 'https://resources.matrstudio.com/matr-logo.png'
+const ICON_URL = 'https://resources.matrstudio.com/matr-icon.png'
 const BASE_URL = 'https://resources.matrstudio.com'
 
 const emailHeader = `
@@ -17,7 +18,7 @@ const emailHeader = `
 
 const emailFooter = `
   <div style="text-align: center; padding-top: 32px; border-top: 1px solid #f0f0f0; margin-top: 32px;">
-    <img src="${LOGO_URL}" alt="Matr Studio" width="28" height="28" style="display: block; margin: 0 auto 10px; border-radius: 6px; opacity: 0.5;" />
+    <img src="${ICON_URL}" alt="Matr Studio" width="28" height="28" style="display: block; margin: 0 auto 10px; border-radius: 6px; opacity: 0.5;" />
     <p style="font-size: 12px; color: #bbb; margin: 0;">
       <a href="${BASE_URL}" style="color: #bbb; text-decoration: none;">resources.matrstudio.com</a>
     </p>
