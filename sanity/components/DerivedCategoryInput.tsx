@@ -38,8 +38,8 @@ const CATEGORY_LABELS: Record<string, string> = {
 }
 
 export function DerivedCategoryInput(props: StringInputProps) {
-  const subtopic = useFormValue(['subtopic']) as string | undefined
-  const derived = subtopic ? SUBTOPIC_TO_CATEGORY[subtopic] : undefined
+  const subtopics = useFormValue(['subtopic']) as string[] | undefined
+  const derived = subtopics?.[0] ? SUBTOPIC_TO_CATEGORY[subtopics[0]] : undefined
 
   useEffect(() => {
     if (derived && derived !== props.value) {

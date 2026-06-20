@@ -56,7 +56,7 @@ export const filteredResourcesQuery = groq`
   *[_type == "resource"
     && ($category == "" || category == $category)
     && ($type == "" || resourceType == $type)
-    && ($subtopic == "" || subtopic == $subtopic)
+    && ($subtopic == "" || $subtopic in subtopic)
     && ($q == "" || title match $q + "*" || summary match $q + "*" || $q in tags)
   ] | order(publishedAt desc) {
     ${resourceFields}
@@ -67,7 +67,7 @@ export const filteredResourcesQueryMulti = groq`
   *[_type == "resource"
     && ($category == "" || category == $category)
     && ($type == "" || resourceType == $type)
-    && (count($subtopics) == 0 || subtopic in $subtopics)
+    && (count($subtopics) == 0 || count(subtopic[@ in $subtopics]) > 0)
     && ($q == "" || title match $q + "*" || summary match $q + "*" || $q in tags)
   ] | order(publishedAt desc) {
     ${resourceFields}

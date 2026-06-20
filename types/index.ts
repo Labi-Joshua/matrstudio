@@ -6,7 +6,7 @@ export interface Resource {
   slug: { current: string }
   resourceType?: 'article' | 'video' | 'book' | 'tool' | 'course' | 'template' | 'podcast'
   category: 'design-execution' | 'strategic-thinking' | 'business-growth' | 'career-craft'
-  subtopic?: string
+  subtopic?: string[]
   author?: string
   tags?: string[]
   summary?: string
