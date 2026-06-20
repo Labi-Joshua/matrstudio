@@ -54,10 +54,10 @@ export default async function TopicsPage({
       <section className="mx-auto max-w-7xl px-4 pb-[64px] sm:px-6 lg:px-8">
         <div className="mb-5">
           <Suspense>
-            <TopicResourceHeader />
+            <TopicResourceHeader total={resources.length} />
           </Suspense>
         </div>
-        <ResourceGrid resources={resources} headingNode={<></>} />
+        <ResourceGrid resources={resources} flat />
       </section>
     </div>
     </>

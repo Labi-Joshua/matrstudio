@@ -6,6 +6,7 @@ interface Props {
   heading?: string
   headingNode?: React.ReactNode
   priorityCount?: number
+  flat?: boolean
 }
 
 function Grid({ resources, mobileLimit, priorityCount = 0 }: { resources: Resource[]; mobileLimit?: number; priorityCount?: number }) {
@@ -23,13 +24,17 @@ function Grid({ resources, mobileLimit, priorityCount = 0 }: { resources: Resour
   )
 }
 
-export function ResourceGrid({ resources, heading = 'Most Recent Resources', headingNode, priorityCount = 3 }: Props) {
+export function ResourceGrid({ resources, heading = 'Most Recent Resources', headingNode, priorityCount = 3, flat = false }: Props) {
   if (resources.length === 0) {
     return (
       <div className="py-24 text-center">
         <p className="text-muted-foreground">No resources found.</p>
       </div>
     )
+  }
+
+  if (flat) {
+    return <Grid resources={resources} priorityCount={priorityCount} />
   }
 
   const recent = resources.slice(0, 6)

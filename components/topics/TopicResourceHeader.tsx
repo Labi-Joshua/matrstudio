@@ -37,7 +37,7 @@ const TYPE_FILTERS = [
   { label: 'Podcast',  value: 'podcast',  color: '#7C3AED' },
 ]
 
-export function TopicResourceHeader() {
+export function TopicResourceHeader({ total }: { total?: number }) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -75,7 +75,7 @@ export function TopicResourceHeader() {
       <div className="flex items-center gap-3">
         <p className="text-sm text-muted-foreground">
           {selected.length === 0
-            ? 'All Resources'
+            ? <>{`All Resources`}{total !== undefined && <span className="ml-1.5 text-muted-foreground/50">{total}</span>}</>
             : selected.length === 1
               ? <>Resources on <span className="text-primary">'{topic}'</span></>
               : <><span className="text-primary">{selected.length} topics</span> selected</>
