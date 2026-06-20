@@ -4,6 +4,26 @@ import { NextResponse } from 'next/server'
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 const NOTIFY_EMAIL = 'dashcoalition@gmail.com'
+const LOGO_URL = 'https://resources.matrstudio.com/matr-icon.png'
+const BASE_URL = 'https://resources.matrstudio.com'
+
+const emailHeader = `
+  <div style="text-align: center; padding: 32px 24px 24px; border-bottom: 1px solid #f0f0f0; margin-bottom: 32px;">
+    <a href="${BASE_URL}" style="display: inline-block;">
+      <img src="${LOGO_URL}" alt="Matr Studio" width="48" height="48" style="display: block; margin: 0 auto 12px; border-radius: 10px;" />
+    </a>
+    <p style="font-family: Georgia, serif; font-size: 15px; color: #1a1a1a; margin: 0; letter-spacing: 0.02em;">Matr Studio</p>
+  </div>
+`
+
+const emailFooter = `
+  <div style="text-align: center; padding-top: 32px; border-top: 1px solid #f0f0f0; margin-top: 32px;">
+    <img src="${LOGO_URL}" alt="Matr Studio" width="28" height="28" style="display: block; margin: 0 auto 10px; border-radius: 6px; opacity: 0.5;" />
+    <p style="font-size: 12px; color: #bbb; margin: 0;">
+      <a href="${BASE_URL}" style="color: #bbb; text-decoration: none;">resources.matrstudio.com</a>
+    </p>
+  </div>
+`
 
 export async function POST(req: Request) {
   const { title, url, topic, creator, email, rationale } = await req.json()
@@ -20,8 +40,9 @@ export async function POST(req: Request) {
         to: email,
         subject: `We received your submission — ${title}`,
         html: `
-          <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; padding: 40px 24px; color: #1a1a1a;">
-            <p style="font-size: 26px; font-weight: 400; line-height: 1.3; margin: 0 0 24px;">
+          <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; padding: 40px 24px; color: #1a1a1a; background: #ffffff;">
+            ${emailHeader}
+            <p style="font-size: 26px; font-weight: 400; line-height: 1.3; margin: 0 0 16px;">
               Thanks for submitting to Matr Studio.
             </p>
             <p style="font-size: 15px; line-height: 1.6; color: #555; margin: 0 0 32px;">
@@ -29,7 +50,7 @@ export async function POST(req: Request) {
               we'll review it shortly. If it makes the cut, we'll credit you and add it to the index.
             </p>
             <div style="border: 1px solid #e5e5e5; border-radius: 10px; padding: 20px 24px; margin-bottom: 32px;">
-              <p style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #999; margin: 0 0 12px;">Submission details</p>
+              <p style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #999; margin: 0 0 12px;">Submission details</p>
               <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
                 <tr><td style="padding: 6px 0; color: #999; width: 120px;">Resource</td><td style="padding: 6px 0; color: #1a1a1a;">${title}</td></tr>
                 <tr><td style="padding: 6px 0; color: #999;">URL</td><td style="padding: 6px 0;"><a href="${url}" style="color: #DC5405; text-decoration: none;">${url}</a></td></tr>
@@ -38,7 +59,7 @@ export async function POST(req: Request) {
                 ${rationale ? `<tr><td style="padding: 6px 0; color: #999; vertical-align: top;">Rationale</td><td style="padding: 6px 0; color: #1a1a1a;">${rationale}</td></tr>` : ''}
               </table>
             </div>
-            <p style="font-size: 13px; color: #999; margin: 0;">— The Matr Studio team</p>
+            ${emailFooter}
           </div>
         `,
       }),
@@ -49,7 +70,8 @@ export async function POST(req: Request) {
         to: NOTIFY_EMAIL,
         subject: `New submission: ${title}`,
         html: `
-          <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; padding: 40px 24px; color: #1a1a1a;">
+          <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; padding: 40px 24px; color: #1a1a1a; background: #ffffff;">
+            ${emailHeader}
             <p style="font-size: 22px; font-weight: 400; margin: 0 0 24px;">New resource submitted for review.</p>
             <div style="border: 1px solid #e5e5e5; border-radius: 10px; padding: 20px 24px; margin-bottom: 24px;">
               <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
@@ -61,6 +83,7 @@ export async function POST(req: Request) {
                 ${rationale ? `<tr><td style="padding: 6px 0; color: #999; vertical-align: top;">Rationale</td><td style="padding: 6px 0; color: #1a1a1a;">${rationale}</td></tr>` : ''}
               </table>
             </div>
+            ${emailFooter}
           </div>
         `,
       }),
