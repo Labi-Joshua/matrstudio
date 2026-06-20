@@ -14,7 +14,6 @@ export interface Resource {
   coverImageUrl?: string
   thumbnailUrl?: string
   externalUrl?: string
-  embedUrl?: string
   publishedAt?: string
   featured?: boolean
 }

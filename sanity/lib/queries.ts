@@ -13,7 +13,6 @@ const resourceFields = groq`
   coverImage,
   thumbnailUrl,
   externalUrl,
-  embedUrl,
   publishedAt,
   featured,
 `
