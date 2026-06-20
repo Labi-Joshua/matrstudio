@@ -13,18 +13,18 @@ const resourceFields = groq`
   coverImage,
   thumbnailUrl,
   externalUrl,
-  publishedAt,
+  "publishedAt": coalesce(publishedAt, _createdAt),
   featured,
 `
 
 export const allResourcesQuery = groq`
-  *[_type == "resource"] | order(publishedAt desc) {
+  *[_type == "resource"] | order(coalesce(publishedAt, _createdAt) desc) {
     ${resourceFields}
   }
 `
 
 export const resourcesByCategoryQuery = groq`
-  *[_type == "resource" && category == $category] | order(publishedAt desc) {
+  *[_type == "resource" && category == $category] | order(coalesce(publishedAt, _createdAt) desc) {
     ${resourceFields}
   }
 `
@@ -34,7 +34,7 @@ export const searchResourcesQuery = groq`
     title match $q + "*" ||
     summary match $q + "*" ||
     $q in tags
-  )] | order(publishedAt desc) {
+  )] | order(coalesce(publishedAt, _createdAt) desc) {
     ${resourceFields}
   }
 `
@@ -47,7 +47,7 @@ export const resourceBySlugQuery = groq`
 `
 
 export const featuredResourcesQuery = groq`
-  *[_type == "resource" && featured == true] | order(publishedAt desc)[0...6] {
+  *[_type == "resource" && featured == true] | order(coalesce(publishedAt, _createdAt) desc)[0...6] {
     ${resourceFields}
   }
 `
@@ -58,7 +58,7 @@ export const filteredResourcesQuery = groq`
     && ($type == "" || resourceType == $type)
     && ($subtopic == "" || $subtopic in subtopic)
     && ($q == "" || title match $q + "*" || summary match $q + "*" || $q in tags)
-  ] | order(publishedAt desc) {
+  ] | order(coalesce(publishedAt, _createdAt) desc) {
     ${resourceFields}
   }
 `
@@ -69,7 +69,7 @@ export const filteredResourcesQueryMulti = groq`
     && ($type == "" || resourceType == $type)
     && (count($subtopics) == 0 || count(subtopic[@ in $subtopics]) > 0)
     && ($q == "" || title match $q + "*" || summary match $q + "*" || $q in tags)
-  ] | order(publishedAt desc) {
+  ] | order(coalesce(publishedAt, _createdAt) desc) {
     ${resourceFields}
   }
 `
