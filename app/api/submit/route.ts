@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     await Promise.all([
       // Confirmation to submitter
       resend.emails.send({
-        from: 'Matr Studio <onboarding@resend.dev>',
+        from: 'Matr Studio <noreply@matrstudio.com>',
         to: email,
         subject: `We received your submission — ${title}`,
         html: `
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
 
       // Notification to admin
       resend.emails.send({
-        from: 'Matr Studio <onboarding@resend.dev>',
+        from: 'Matr Studio <noreply@matrstudio.com>',
         to: NOTIFY_EMAIL,
         subject: `New submission: ${title}`,
         html: `
