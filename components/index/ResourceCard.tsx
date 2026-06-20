@@ -65,6 +65,7 @@ export function ResourceCard({ resource }: Props) {
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           )}
+          <div className="absolute inset-0 bg-black/10 rounded-[12px]" />
           {(resourceType || domain) && (
             <div className="absolute bottom-3 right-3 flex items-center gap-1.5">
               {resourceType && (
