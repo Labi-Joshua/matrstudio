@@ -15,24 +15,47 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: 'swap',
 })
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://resources.matrstudio.com'
+
 export const metadata: Metadata = {
+  metadataBase: new URL(BASE_URL),
   title: {
-    default: 'Matrstudio Operational Index',
-    template: '%s — Matrstudio',
+    default: 'Matr Studio — A Working Manual for the Craft of Design',
+    template: '%s — Matr Studio',
   },
   description:
-    'A curated library of tools, frameworks, and insights for designers who care about the craft.',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'),
+    'A curated index of tools, frameworks, articles, and insights for designers who care about the craft.',
+  keywords: [
+    'design resources', 'design tools', 'UI design', 'UX design', 'product design',
+    'design systems', 'design thinking', 'design craft', 'Matr Studio',
+  ],
+  authors: [{ name: 'Matr Studio', url: BASE_URL }],
+  creator: 'Matr Studio',
   openGraph: {
-    title: 'Matrstudio Operational Index',
-    description: 'A curated library of tools, frameworks, and insights for designers who care about the craft.',
-    siteName: 'Matrstudio',
+    title: 'Matr Studio — A Working Manual for the Craft of Design',
+    description: 'A curated index of tools, frameworks, articles, and insights for designers who care about the craft.',
+    siteName: 'Matr Studio',
+    url: BASE_URL,
     type: 'website',
+    locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Matrstudio Operational Index',
-    description: 'A curated library of tools, frameworks, and insights for designers who care about the craft.',
+    title: 'Matr Studio — A Working Manual for the Craft of Design',
+    description: 'A curated index of tools, frameworks, articles, and insights for designers who care about the craft.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: BASE_URL,
   },
 }
 
