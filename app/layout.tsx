@@ -17,6 +17,31 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://resources.matrstudio.com'
 
+const siteJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${BASE_URL}/#website`,
+      name: 'Matr Studio',
+      url: BASE_URL,
+      description: 'A curated index of tools, frameworks, articles, and insights for designers who care about the craft.',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: { '@type': 'EntryPoint', urlTemplate: `${BASE_URL}/?q={search_term_string}` },
+        'query-input': 'required name=search_term_string',
+      },
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${BASE_URL}/#organization`,
+      name: 'Matr Studio',
+      url: BASE_URL,
+      logo: `${BASE_URL}/matr-logo.png`,
+    },
+  ],
+}
+
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
@@ -65,6 +90,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${manrope.variable} ${ibmPlexMono.variable} h-full antialiased`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
+        />
+      </head>
       <body className="flex min-h-screen flex-col bg-background text-foreground">{children}</body>
     </html>
   )

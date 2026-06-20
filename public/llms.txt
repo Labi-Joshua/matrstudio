@@ -1,0 +1,53 @@
+# Matr Studio
+
+> A curated index of design resources for UX and product designers.
+
+Matr Studio (resources.matrstudio.com) is a library of handpicked tools, articles, books, videos, templates, podcasts, and courses — organized by design topic. It covers design execution, strategic thinking, business & growth, and career development for designers.
+
+## Key Pages
+
+- [Home](https://resources.matrstudio.com) — Browse all resources
+- [Topics](https://resources.matrstudio.com/topics) — Browse resources by topic
+- [Submit a Resource](https://resources.matrstudio.com/submit) — Submit a resource for review
+
+## Design Topics
+
+### Design Execution
+Resources on translating design decisions into high-quality, consistent output.
+- [Design Systems](https://resources.matrstudio.com/topics/design-systems)
+- [Design Handoff](https://resources.matrstudio.com/topics/design-handoff)
+- [Prototyping](https://resources.matrstudio.com/topics/prototyping)
+- [Documentation](https://resources.matrstudio.com/topics/documentation)
+- [Visual Architecture](https://resources.matrstudio.com/topics/visual-architecture)
+
+### Strategic Thinking
+Resources on thinking beyond the screen — from research to rationale.
+- [Design Rationale](https://resources.matrstudio.com/topics/design-rationale)
+- [Stakeholder Management](https://resources.matrstudio.com/topics/stakeholder-management)
+- [Product Thinking](https://resources.matrstudio.com/topics/product-thinking)
+- [User Research](https://resources.matrstudio.com/topics/user-research)
+- [Design Ethics](https://resources.matrstudio.com/topics/design-ethics)
+
+### Business & Growth
+Resources on the intersection of design, product, and business outcomes.
+- [Product Analytics](https://resources.matrstudio.com/topics/product-analytics)
+- [Conversion Optimization](https://resources.matrstudio.com/topics/conversion-optimization)
+- [SEO Optimization](https://resources.matrstudio.com/topics/seo-optimization)
+- [Growth Design](https://resources.matrstudio.com/topics/growth-design)
+- [Marketing & Strategy](https://resources.matrstudio.com/topics/marketing-strategy)
+
+### Career & Craft
+Resources on building a sustainable, high-leverage design career.
+- [Career Strategy](https://resources.matrstudio.com/topics/career-strategy)
+- [Portfolio & Case Studies](https://resources.matrstudio.com/topics/portfolio-case-studies)
+- [AI-Assisted Workflow](https://resources.matrstudio.com/topics/ai-assisted-workflow)
+- [Accessibility](https://resources.matrstudio.com/topics/accessibility)
+- [Workflow Optimization](https://resources.matrstudio.com/topics/workflow-optimization)
+
+## Resource Types
+
+Matr Studio indexes the following resource formats: Articles, Videos, Books, Tools, Courses, Templates, Podcasts.
+
+## About
+
+Matr Studio is created and maintained by the Matr Studio team. Resources are curated and reviewed before being added to the index. Designers can submit resources for consideration at https://resources.matrstudio.com/submit.

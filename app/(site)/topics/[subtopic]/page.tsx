@@ -9,6 +9,18 @@ import { TopicBrowser } from '@/components/topics/TopicBrowser'
 import { TopicResourceHeader } from '@/components/topics/TopicResourceHeader'
 import type { Resource } from '@/types'
 
+const BASE_URL = 'https://resources.matrstudio.com'
+
+const RESOURCE_SCHEMA_TYPE: Record<string, string> = {
+  article:  'Article',
+  video:    'VideoObject',
+  book:     'Book',
+  tool:     'SoftwareApplication',
+  course:   'Course',
+  template: 'CreativeWork',
+  podcast:  'PodcastEpisode',
+}
+
 const SUBTOPICS = [
   { value: 'design-systems',          label: 'Design Systems',          category: 'design-execution',   categoryLabel: 'Design Execution' },
   { value: 'design-handoff',          label: 'Design Handoff',          category: 'design-execution',   categoryLabel: 'Design Execution' },
@@ -79,7 +91,49 @@ export default async function SubtopicPage({
     (s) => s.category === found.category && s.value !== subtopic
   )
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${BASE_URL}/topics/${subtopic}`,
+        name: `${found.label} Resources`,
+        description: `Curated ${found.label.toLowerCase()} resources for UX and product designers.`,
+        url: `${BASE_URL}/topics/${subtopic}`,
+        isPartOf: { '@id': `${BASE_URL}/#website` },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home',   item: BASE_URL },
+          { '@type': 'ListItem', position: 2, name: 'Topics', item: `${BASE_URL}/topics` },
+          { '@type': 'ListItem', position: 3, name: found.label, item: `${BASE_URL}/topics/${subtopic}` },
+        ],
+      },
+      {
+        '@type': 'ItemList',
+        name: `${found.label} Resources`,
+        itemListElement: resources.map((r, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          item: {
+            '@type': r.resourceType ? (RESOURCE_SCHEMA_TYPE[r.resourceType] ?? 'CreativeWork') : 'CreativeWork',
+            name: r.title,
+            description: r.summary,
+            ...(r.externalUrl ? { url: r.externalUrl } : {}),
+            ...(r.author ? { author: { '@type': 'Person', name: r.author } } : {}),
+          },
+        })),
+      },
+    ],
+  }
+
   return (
+    <>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
     <div>
       <section className="mx-auto max-w-7xl px-4 pt-[32px] md:pt-[80px] pb-[64px] sm:px-6 lg:px-8">
         <nav className="mb-5 flex items-center gap-1.5 text-sm text-muted-foreground">
@@ -144,5 +198,6 @@ export default async function SubtopicPage({
         </section>
       )}
     </div>
+    </>
   )
 }

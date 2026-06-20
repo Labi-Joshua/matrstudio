@@ -15,6 +15,15 @@ export const metadata: Metadata = {
   alternates: { canonical: '/topics' },
 }
 
+const topicsJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Browse Design Resources by Topic',
+  description: 'Explore curated design resources organized by topic — design systems, UX research, product thinking, career strategy, and more.',
+  url: 'https://resources.matrstudio.com/topics',
+  isPartOf: { '@id': 'https://resources.matrstudio.com/#website' },
+}
+
 export default async function TopicsPage({
   searchParams,
 }: {
@@ -29,6 +38,11 @@ export default async function TopicsPage({
   const resources = await client.fetch<Resource[]>(filteredResourcesQueryMulti, { category, type, subtopics, q: '' })
 
   return (
+    <>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(topicsJsonLd) }}
+    />
     <div>
       <section className="mx-auto max-w-7xl px-4 pt-[32px] md:pt-[80px] pb-[64px] sm:px-6 lg:px-8">
         <h1 className="sr-only">Browse Design Resources by Topic</h1>
@@ -46,5 +60,6 @@ export default async function TopicsPage({
         <ResourceGrid resources={resources} headingNode={<></>} />
       </section>
     </div>
+    </>
   )
 }
