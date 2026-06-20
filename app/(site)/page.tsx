@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import { IndexHero } from '@/components/index/IndexHero'
 import { ResourceGrid } from '@/components/index/ResourceGrid'
 import { CategoryFilter } from '@/components/index/CategoryFilter'
+import { TypeFilterButton } from '@/components/index/TypeFilterButton'
 import { SearchInput } from '@/components/layout/SearchInput'
 import { client } from '@/sanity/lib/client'
 import { filteredResourcesQuery } from '@/sanity/lib/queries'
@@ -21,27 +22,39 @@ export default async function HomePage({
 
   const resources = await client.fetch<Resource[]>(filteredResourcesQuery, { category, type, subtopic: '', q })
 
+  const CATEGORY_LABELS: Record<string, string> = {
+    'design-execution':   'Design Execution',
+    'strategic-thinking': 'Strategic Thinking',
+    'business-growth':    'Business & Growth',
+    'career-craft':       'Career & Craft',
+  }
+
   const heading = q
     ? `Results for "${q}"`
     : type
-    ? `${type.charAt(0).toUpperCase() + type.slice(1)}s`
+    ? `Showing "${type.charAt(0).toUpperCase() + type.slice(1)}" Resources.`
     : category
-    ? `${category.replace(/-/g, ' & ')} Resources`
+    ? `Showing "${CATEGORY_LABELS[category] ?? category}" Resources.`
     : 'Most Recent Resources'
 
   return (
     <div>
       <IndexHero />
 
-      {/* Mobile search bar — hidden on desktop where header search is visible */}
-      <div className="md:hidden mx-auto max-w-7xl px-4 pb-4 sm:px-6">
-        <div className="flex items-center gap-2 rounded-full bg-[#F0F0F0] px-4 py-[8px]">
-          <svg className="shrink-0 size-4 text-muted-foreground" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={1.5}>
-            <circle cx="8.5" cy="8.5" r="5.75" />
-            <path strokeLinecap="round" d="M13 13l3.5 3.5" />
-          </svg>
-          <Suspense fallback={<div className="flex-1" />}>
-            <SearchInput inputClassName="text-[16px]" dropdownClassName="left-0 w-full" />
+      {/* Mobile: row 1 — search + media type */}
+      <div className="md:hidden mx-auto max-w-7xl px-4 pb-3 sm:px-6">
+        <div className="flex items-center gap-2">
+          <div className="flex flex-1 items-center gap-2 rounded-full bg-[#F0F0F0] px-4 py-[8px]">
+            <svg className="shrink-0 size-4 text-muted-foreground" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={1.5}>
+              <circle cx="8.5" cy="8.5" r="5.75" />
+              <path strokeLinecap="round" d="M13 13l3.5 3.5" />
+            </svg>
+            <Suspense fallback={<div className="flex-1" />}>
+              <SearchInput inputClassName="text-[16px]" dropdownClassName="left-0 w-full" />
+            </Suspense>
+          </div>
+          <Suspense>
+            <TypeFilterButton />
           </Suspense>
         </div>
       </div>

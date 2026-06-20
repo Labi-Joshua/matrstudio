@@ -97,7 +97,7 @@ export function TopicResourceHeader() {
             <circle cx="4.5" cy="11" r="1.5" />
             <line x1="6" y1="11" x2="14" y2="11" strokeLinecap="round" />
           </svg>
-          Filter
+          {currentType ? TYPE_FILTERS.find((f) => f.value === currentType)?.label : 'Media Type'}
         </button>
 
         {open && (

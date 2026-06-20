@@ -35,7 +35,7 @@ export default async function TopicsPage({
             <TopicResourceHeader />
           </Suspense>
         </div>
-        <ResourceGrid resources={resources} />
+        <ResourceGrid resources={resources} headingNode={<></>} />
       </section>
     </div>
   )

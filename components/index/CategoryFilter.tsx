@@ -60,26 +60,25 @@ export function CategoryFilter() {
 
   return (
     <div className="mb-8 flex items-center justify-between gap-4">
-      {/* Mobile: pill trigger + selected pill */}
-      <div ref={mobileDropdownRef} className="md:hidden flex items-center gap-2 relative">
-        {/* Active selection pill — always visible */}
-        <span className="rounded-full bg-[#DC5405] px-[14px] py-[8px] text-[12px] font-medium text-white">
-          {CATEGORIES.find((c) => c.value === current)?.label ?? 'All Topics'}
-        </span>
-
-        {/* Dropdown trigger pill */}
+      {/* Mobile: category pill right-aligned */}
+      <div ref={mobileDropdownRef} className="md:hidden flex items-center justify-end gap-2 relative ml-auto">
+        {current && (
+          <span className="rounded-full bg-[#DC5405] px-[14px] py-[8px] text-[14px] font-medium text-white">
+            {CATEGORIES.find((c) => c.value === current)?.label}
+          </span>
+        )}
         <button
           onClick={() => setMobileOpen((o) => !o)}
-          className="flex items-center gap-1.5 rounded-full bg-[#F5F5F5] px-[14px] py-[8px] text-[12px] font-medium text-foreground"
+          className="flex items-center gap-1.5 rounded-full bg-[#F5F5F5] px-[14px] py-[8px] text-[14px] font-medium text-foreground"
         >
-          Topics
+          Select a category
           <svg className="size-3 shrink-0" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
             <path d="M2 4l4 4 4-4" />
           </svg>
         </button>
 
         {mobileOpen && (
-          <div className="absolute left-0 top-full z-50 mt-2 w-52 overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5">
+          <div className="absolute right-0 top-full z-50 mt-2 w-52 overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5">
             {CATEGORIES.map(({ label, value }) => (
               <button
                 key={value}
@@ -117,7 +116,7 @@ export function CategoryFilter() {
         })}
       </div>
 
-      <div ref={dropdownRef} className="relative shrink-0">
+      <div ref={dropdownRef} className="hidden md:block relative shrink-0">
         <button
           onClick={() => setOpen((o) => !o)}
           className="flex items-center gap-1.5 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary transition-colors hover:bg-primary/15"
@@ -128,7 +127,7 @@ export function CategoryFilter() {
             <circle cx="4.5" cy="11" r="1.5" />
             <line x1="6" y1="11" x2="14" y2="11" strokeLinecap="round" />
           </svg>
-          Filter
+          {currentType ? TYPE_FILTERS.find((f) => f.value === currentType)?.label : 'Media Type'}
         </button>
 
         {open && (
