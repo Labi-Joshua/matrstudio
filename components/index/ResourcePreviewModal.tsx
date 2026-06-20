@@ -167,10 +167,10 @@ export function ResourcePreviewModal({ resource, onClose }: Props) {
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+              className="group mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
             >
               {ytId ? 'Watch on YouTube' : vimeoId ? 'Watch on Vimeo' : 'Visit Resource'}
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.75} className="size-3.5">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.75} className="size-3.5 transition-transform duration-200 group-hover:translate-x-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 8h10M9 4l4 4-4 4" />
               </svg>
             </a>
