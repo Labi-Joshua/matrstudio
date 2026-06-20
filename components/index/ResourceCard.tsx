@@ -43,6 +43,8 @@ export function ResourceCard({ resource }: Props) {
 
   const imageSrc = resource.coverImageUrl
     ?? (resource.coverImage ? urlFor(resource.coverImage).width(640).height(480).url() : null)
+    ?? resource.thumbnailUrl
+    ?? null
 
   return (
     <Link

@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity'
 import { DerivedCategoryInput } from '../components/DerivedCategoryInput'
+import { AutoThumbnailInput } from '../components/AutoThumbnailInput'
 
 export const resource = defineType({
   name: 'resource',
@@ -102,6 +103,13 @@ export const resource = defineType({
       name: 'externalUrl',
       title: 'External URL',
       type: 'url',
+    }),
+    defineField({
+      name: 'thumbnailUrl',
+      title: 'Thumbnail URL',
+      type: 'string',
+      description: 'Auto-fetched from the External URL. Used when no Cover Image is uploaded.',
+      components: { input: AutoThumbnailInput },
     }),
     defineField({
       name: 'publishedAt',

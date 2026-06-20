@@ -11,6 +11,7 @@ const resourceFields = groq`
   tags,
   summary,
   coverImage,
+  thumbnailUrl,
   externalUrl,
   publishedAt,
   featured,

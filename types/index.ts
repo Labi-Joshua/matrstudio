@@ -12,6 +12,7 @@ export interface Resource {
   summary?: string
   coverImage?: SanityImageSource
   coverImageUrl?: string
+  thumbnailUrl?: string
   externalUrl?: string
   publishedAt?: string
   featured?: boolean
