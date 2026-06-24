@@ -135,28 +135,9 @@ export default async function SubtopicPage({
       dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
     />
     <div>
-      <section className="mx-auto max-w-7xl px-4 pt-[32px] md:pt-[80px] pb-[64px] sm:px-6 lg:px-8">
-        <nav className="mb-5 flex items-center gap-1.5 text-sm text-muted-foreground">
-          <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
-          <span>/</span>
-          <Link href="/topics" className="hover:text-foreground transition-colors">Topics</Link>
-          <span>/</span>
-          <span className="text-foreground">{found.label}</span>
-        </nav>
-        <p className="mb-2 text-xs font-medium uppercase tracking-widest text-primary">
-          {found.categoryLabel}
-        </p>
-        <h1
-          className="font-display text-[40px] md:text-[56px] leading-[1.1] tracking-[-1.5px] text-foreground"
-        >
-          {found.label}<span className="text-primary">.</span>
-        </h1>
-        <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-          Curated {found.label.toLowerCase()} resources for designers — handpicked articles, tools, books, and videos.
-        </p>
-      </section>
+      <h1 className="sr-only">{found.label} Resources</h1>
 
-      <section className="mx-auto max-w-7xl px-4 pb-[64px] sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 pt-[32px] md:pt-[80px] pb-[64px] sm:px-6 lg:px-8">
         <Suspense>
           <TopicBrowser />
         </Suspense>
