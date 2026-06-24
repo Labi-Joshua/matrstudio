@@ -45,11 +45,11 @@ const siteJsonLd = {
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: 'Matr Studio — A Working Manual for the Craft of Design',
+    default: 'Curated Design Resources for the Modern Craft — Matr Studio',
     template: '%s — Matr Studio',
   },
   description:
-    'A curated index of tools, frameworks, articles, and insights for designers who care about the craft.',
+    'A curated library of design resources — tools, articles, books, videos, and frameworks for UX and product designers who care about the craft.',
   keywords: [
     'design resources', 'design tools', 'UI design', 'UX design', 'product design',
     'design systems', 'design thinking', 'design craft', 'Matr Studio',
@@ -57,8 +57,8 @@ export const metadata: Metadata = {
   authors: [{ name: 'Matr Studio', url: BASE_URL }],
   creator: 'Matr Studio',
   openGraph: {
-    title: 'Matr Studio — A Working Manual for the Craft of Design',
-    description: 'A curated index of tools, frameworks, articles, and insights for designers who care about the craft.',
+    title: 'Curated Design Resources for the Modern Craft — Matr Studio',
+    description: 'A curated library of design resources — tools, articles, books, videos, and frameworks for UX and product designers.',
     siteName: 'Matr Studio',
     url: BASE_URL,
     type: 'website',
@@ -66,8 +66,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Matr Studio — A Working Manual for the Craft of Design',
-    description: 'A curated index of tools, frameworks, articles, and insights for designers who care about the craft.',
+    title: 'Curated Design Resources for the Modern Craft — Matr Studio',
+    description: 'A curated library of design resources — tools, articles, books, videos, and frameworks for UX and product designers.',
   },
   robots: {
     index: true,
