@@ -33,7 +33,7 @@ export function TypeFilterButton() {
   function selectType(value: string) {
     const params = new URLSearchParams(searchParams.toString())
     if (value) { params.set('type', value) } else { params.delete('type') }
-    router.push(`${pathname}?${params.toString()}`)
+    router.push(`${pathname}?${params.toString()}`, { scroll: false })
     setOpen(false)
   }
 
