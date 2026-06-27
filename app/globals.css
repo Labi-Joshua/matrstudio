@@ -158,7 +158,7 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    cursor: url('/cursor.svg') 1 1, auto;
+    cursor: url('/cursor.svg') 2 2, auto;
   }
   body {
     @apply bg-background text-foreground;
