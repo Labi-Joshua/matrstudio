@@ -158,11 +158,19 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    cursor: url('/cursor.svg') 1 1, auto;
   }
   body {
     @apply bg-background text-foreground;
   }
   html {
     @apply font-sans;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="search"],
+  input[type="password"],
+  textarea {
+    cursor: text;
   }
 }
