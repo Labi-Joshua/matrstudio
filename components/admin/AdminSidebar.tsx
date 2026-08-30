@@ -18,6 +18,8 @@ import {
   MoreHorizontal,
 } from 'lucide-react'
 import { logout } from '@/app/(admin)/admin/(dashboard)/actions'
+import { initials } from '@/lib/utils'
+import type { AdminUser } from '@/lib/admin-users'
 
 interface NavItem {
   href: string
@@ -79,7 +81,13 @@ function NavLink({ item, pathname }: { item: NavItem; pathname: string }) {
   )
 }
 
-export function AdminSidebar({ pendingSubmissions }: { pendingSubmissions: number }) {
+export function AdminSidebar({
+  pendingSubmissions,
+  user,
+}: {
+  pendingSubmissions: number
+  user: AdminUser
+}) {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -113,11 +121,11 @@ export function AdminSidebar({ pendingSubmissions }: { pendingSubmissions: numbe
 
         <div className="relative flex items-center gap-3">
           <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary text-base font-medium text-white">
-            AS
+            {initials(user.name ?? user.email)}
           </span>
           <div className="flex min-w-0 flex-1 flex-col">
-            <span className="truncate text-base font-medium text-sidebar-foreground">Alex Simmons</span>
-            <span className="truncate text-sm text-sidebar-foreground/50">simmon@radianos.com</span>
+            <span className="truncate text-base font-medium text-sidebar-foreground">{user.name ?? user.email}</span>
+            <span className="truncate text-sm text-sidebar-foreground/50">{user.email}</span>
           </div>
           <button
             type="button"
@@ -165,7 +173,7 @@ export function AdminSidebar({ pendingSubmissions }: { pendingSubmissions: numbe
       </div>
 
       <div className="flex flex-col gap-3">
-        <NavLink item={{ href: '/admin/settings', label: 'Settings', icon: Settings, disabled: true }} pathname={pathname} />
+        <NavLink item={{ href: '/admin/settings', label: 'Settings', icon: Settings }} pathname={pathname} />
 
         <a
           href="https://resources.matrstudio.com"

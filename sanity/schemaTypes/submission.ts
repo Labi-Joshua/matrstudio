@@ -74,6 +74,17 @@ export const submission = defineType({
       type: 'datetime',
       readOnly: true,
     }),
+    defineField({
+      name: 'reviewedBy',
+      title: 'Reviewed By',
+      type: 'object',
+      readOnly: true,
+      description: 'Snapshot of the admin who approved/rejected this — admin accounts live in a separate dataset, so this can’t be a live reference.',
+      fields: [
+        defineField({ name: 'name', title: 'Name', type: 'string' }),
+        defineField({ name: 'email', title: 'Email', type: 'string' }),
+      ],
+    }),
   ],
   preview: {
     select: { title: 'title', subtitle: 'status' },

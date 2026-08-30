@@ -2,11 +2,14 @@
 
 import { usePathname } from 'next/navigation'
 import { Search, Bell, Menu } from 'lucide-react'
+import { initials } from '@/lib/utils'
+import type { AdminUser } from '@/lib/admin-users'
 
 const TITLES: Record<string, string> = {
   '/admin': 'Overview',
   '/admin/submissions': 'Submissions',
   '/admin/resources': 'Resources',
+  '/admin/settings': 'Settings',
 }
 
 function titleForPath(pathname: string): string {
@@ -15,7 +18,7 @@ function titleForPath(pathname: string): string {
   return TITLES[base] ?? 'Admin'
 }
 
-export function AdminTopbar({ hasAlerts }: { hasAlerts: boolean }) {
+export function AdminTopbar({ hasAlerts, user }: { hasAlerts: boolean; user: AdminUser }) {
   const pathname = usePathname()
 
   return (
@@ -35,11 +38,11 @@ export function AdminTopbar({ hasAlerts }: { hasAlerts: boolean }) {
       <div className="ml-auto flex shrink-0 items-center gap-3 rounded-full border border-[#242E42]/8 bg-white p-2">
         <div className="flex items-center gap-2.5">
           <span className="flex size-10 items-center justify-center rounded-full bg-primary text-sm font-medium text-white">
-            AS
+            {initials(user.name ?? user.email)}
           </span>
           <div className="hidden flex-col sm:flex">
-            <span className="text-sm font-semibold text-foreground">Alex Simmons</span>
-            <span className="text-xs text-muted-foreground">simmon@radianos.com</span>
+            <span className="text-sm font-semibold text-foreground">{user.name ?? user.email}</span>
+            <span className="text-xs text-muted-foreground">{user.email}</span>
           </div>
         </div>
 

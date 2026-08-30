@@ -15,7 +15,7 @@ interface SubmissionRecord {
 }
 
 export async function approveSubmission(id: string) {
-  await requireAdminSession()
+  const reviewer = await requireAdminSession()
 
   const submission = await writeClient.fetch<SubmissionRecord | null>(
     `*[_type == "submission" && _id == $id][0]{ title, url, topic, creator, rationale }`,
@@ -45,6 +45,7 @@ export async function approveSubmission(id: string) {
       status: 'approved',
       resolvedResourceId: resource._id,
       reviewedAt: new Date().toISOString(),
+      reviewedBy: { name: reviewer.name, email: reviewer.email },
     })
     .commit()
 
@@ -54,11 +55,15 @@ export async function approveSubmission(id: string) {
 }
 
 export async function rejectSubmission(id: string) {
-  await requireAdminSession()
+  const reviewer = await requireAdminSession()
 
   await writeClient
     .patch(id)
-    .set({ status: 'rejected', reviewedAt: new Date().toISOString() })
+    .set({
+      status: 'rejected',
+      reviewedAt: new Date().toISOString(),
+      reviewedBy: { name: reviewer.name, email: reviewer.email },
+    })
     .commit()
 
   revalidatePath('/admin/submissions')
