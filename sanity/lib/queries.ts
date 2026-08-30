@@ -73,3 +73,59 @@ export const filteredResourcesQueryMulti = groq`
     ${resourceFields}
   }
 `
+
+// Admin dashboard queries
+
+const submissionFields = groq`
+  _id,
+  title,
+  url,
+  topic,
+  creator,
+  rationale,
+  submitterEmail,
+  status,
+  submittedAt,
+  resolvedResourceId,
+  reviewedAt,
+`
+
+export const pendingSubmissionsQuery = groq`
+  *[_type == "submission" && status == "pending"] | order(submittedAt desc) {
+    ${submissionFields}
+  }
+`
+
+export const allSubmissionsQuery = groq`
+  *[_type == "submission"] | order(submittedAt desc) {
+    ${submissionFields}
+  }
+`
+
+export const adminResourcesQuery = groq`
+  *[_type == "resource"] | order(coalesce(publishedAt, _createdAt) desc) {
+    ${resourceFields}
+  }
+`
+
+export const pendingSubmissionsCountQuery = groq`count(*[_type == "submission" && status == "pending"])`
+
+export const dashboardCountsQuery = groq`{
+  "pendingSubmissions": count(*[_type == "submission" && status == "pending"]),
+  "oldestPendingSubmittedAt": *[_type == "submission" && status == "pending"] | order(submittedAt asc) [0] .submittedAt,
+  "totalResources": count(*[_type == "resource"]),
+  "publishedLast30Days": count(*[_type == "resource" && dateTime(coalesce(publishedAt, _createdAt)) > dateTime(now()) - 60*60*24*30]),
+  "contributors": count(array::unique(*[_type == "submission"].submitterEmail)),
+  "byCategory": {
+    "design-execution": count(*[_type == "resource" && category == "design-execution"]),
+    "strategic-thinking": count(*[_type == "resource" && category == "strategic-thinking"]),
+    "business-growth": count(*[_type == "resource" && category == "business-growth"]),
+    "career-craft": count(*[_type == "resource" && category == "career-craft"]),
+  }
+}`
+
+export const recentResourcesQuery = groq`
+  *[_type == "resource"] | order(coalesce(publishedAt, _createdAt) desc) [0...8] {
+    ${resourceFields}
+  }
+`

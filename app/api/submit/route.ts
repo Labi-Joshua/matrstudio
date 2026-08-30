@@ -1,5 +1,6 @@
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
+import { writeClient } from '@/sanity/lib/write-client'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -32,8 +33,25 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
+  const submissionSave = writeClient
+    .create({
+      _type: 'submission',
+      title,
+      url,
+      topic,
+      creator,
+      rationale,
+      submitterEmail: email,
+      status: 'pending',
+      submittedAt: new Date().toISOString(),
+    })
+    .catch((err) => {
+      console.error('Failed to save submission to Sanity:', err)
+    })
+
   try {
     await Promise.all([
+      submissionSave,
       // Confirmation to submitter
       resend.emails.send({
         from: 'Matr Studio <noreply@matrstudio.com>',
